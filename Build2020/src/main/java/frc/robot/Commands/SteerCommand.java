@@ -7,14 +7,26 @@
 
 package frc.robot.Commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
+import frc.robot.Subsystems.DriveSubsystem;
 
 public class SteerCommand extends CommandBase {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+
+  private final DriveSubsystem driveSubsystem;
+  
   /**
    * Creates a new SteerCommand.
    */
-  public SteerCommand() {
+  public SteerCommand(Subsystem driveSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.driveSubsystem = (DriveSubsystem) driveSubsystem;
+
+    addRequirements(driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -25,6 +37,15 @@ public class SteerCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    double yaxis = RobotContainer.getY(RobotContainer.joy1, Constants.yDeadband); //Adjusted Y
+    double zaxis = RobotContainer.getZ(RobotContainer.joy1, Constants.zDeadband); // Adjusted Z
+
+    SmartDashboard.putNumber("Y-AXIS", yaxis);
+    SmartDashboard.putNumber("Z-AXIS", zaxis);
+
+    driveSubsystem.Drive_Steer(yaxis, zaxis);
+
   }
 
   // Called once the command ends or is interrupted.
@@ -35,6 +56,6 @@ public class SteerCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return !RobotContainer.joy1.getRawButton(Constants.steerButtonNumber);
   }
 }
