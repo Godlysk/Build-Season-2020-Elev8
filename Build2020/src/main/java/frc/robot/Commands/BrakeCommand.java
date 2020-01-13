@@ -25,7 +25,6 @@ public class BrakeCommand extends CommandBase {
     
     // Use addRequirements() here to declare subsystem dependencies.
     this.driveSubsystem = (DriveSubsystem) driveSubsystem;
-
     addRequirements(driveSubsystem);
   }
 

@@ -25,7 +25,6 @@ public class SteerCommand extends CommandBase {
   public SteerCommand(Subsystem driveSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.driveSubsystem = (DriveSubsystem) driveSubsystem;
-
     addRequirements(driveSubsystem);
   }
 

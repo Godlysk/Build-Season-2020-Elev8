@@ -25,7 +25,6 @@ public class DriveCommand extends CommandBase {
   public DriveCommand(Subsystem driveSubsystem) {
     
     this.driveSubsystem = (DriveSubsystem) driveSubsystem;
-
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveSubsystem);
   }
