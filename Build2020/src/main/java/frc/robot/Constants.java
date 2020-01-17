@@ -23,7 +23,7 @@ public final class Constants {
     public final static int BR_port = 4;
     public final static int BL_port = 1;
 
-    public final static double maxSpeed = 0.6;
+    public final static double maxSpeed = 0.4;
     public final static double swerveCoefficient = 0.6;
     public final static double yDeadband = 0.1;
     public final static double zDeadband = 0.1;
@@ -31,13 +31,13 @@ public final class Constants {
     public final static double zTurnThreshold = 0.1;
 
     // PID Constants
-    public final static int kP_DriveStraight = 0;
-    public final static int kI_DriveStraight = 0;
-    public final static int kD_DriveStraight = 0;
+    public final static double kP_DriveStraight = 0.00005;
+    public final static double kI_DriveStraight = 0.000005;
+    public final static double kD_DriveStraight = 0.00005;
 
-    public final static int kP_DriveTurn = 0;
-    public final static int kI_DriveTurn = 0;
-    public final static int kD_DriveTurn = 0;
+    public final static double kP_DriveTurn = 0;
+    public final static double kI_DriveTurn = 0;
+    public final static double kD_DriveTurn = 0;
 
 
     //Buttons

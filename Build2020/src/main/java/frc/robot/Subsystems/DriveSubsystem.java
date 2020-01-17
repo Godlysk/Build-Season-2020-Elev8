@@ -68,8 +68,8 @@ public class DriveSubsystem extends SubsystemBase {
     correction += (integral_DriveStraight * Constants.kI_DriveStraight);
     correction += (derivative * Constants.kD_DriveStraight);
 
-    double left = yaxis - correction;
-    double right = yaxis + correction;
+    double left = yaxis + correction;
+    double right = yaxis - correction;
 
     drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
 
