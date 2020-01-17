@@ -32,7 +32,6 @@ public class Robot extends TimedRobot {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
-  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -63,14 +62,41 @@ public class Robot extends TimedRobot {
 
     RawColor detectedColor = colorSensor.getRawColor();
     double IR = colorSensor.getIR();
-    
-    SmartDashboard.putNumber("Red", 255 * Constants.sigmoid(detectedColor.red));
-    SmartDashboard.putNumber("Green", 255 * Constants.sigmoid(detectedColor.green));
-    SmartDashboard.putNumber("Blue", 255 * Constants.sigmoid(detectedColor.blue));
 
-    SmartDashboard.putNumber("Red/Green", Constants.sigmoid(detectedColor.red) * Constants.sigmoid(detectedColor.green));
-    SmartDashboard.putNumber("Green/Blue", Constants.sigmoid(detectedColor.green) * Constants.sigmoid(detectedColor.blue));
+    double red = detectedColor.red;
+    double green = detectedColor.green;
+    double blue = detectedColor.blue;
+    double redgreen = red/green;
+    double greenblue = green/blue;
+    double redblue = red/blue;
+    
+    String color = "";
+    
+    if(redgreen<=0.6 && redgreen>=0.54){
+      color = "yellow";
+    }
+    else if(redblue<=4.5 && redblue>=1.5){
+      color = "red";
+    }
+    else if(redblue<=0.9 && redblue>=0.54){
+      color = "green";
+    }
+    else if(redblue<=0.45 && redblue>=0.2){
+      color = "blue";
+    }
+    else{
+      color = "error";
+    }
+
+    SmartDashboard.putNumber("Red", red);
+    SmartDashboard.putNumber("Green", green);
+    SmartDashboard.putNumber("Blue", blue);
+    SmartDashboard.putNumber("Red by Green", redgreen);
+    SmartDashboard.putNumber("Green by Blue", greenblue);
+    SmartDashboard.putNumber("Red by Blue", redblue);
     SmartDashboard.putNumber("IR", IR);
+    SmartDashboard.putString("Color", color);
+
 
   }
 

@@ -8,8 +8,11 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class DriveSubsystem extends SubsystemBase {
   
@@ -45,24 +48,69 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
 
+  double integral_DriveStraight = 0;
+
   public void Drive_Straight(double yaxis) {
-    double left = yaxis;
-    double right = yaxis;
+
+    double navxYawAxisRate = RobotContainer.navx.getRate();
+    double shaftLeftRate = RobotContainer.enc_L.getRate();
+    double shaftRightRate = RobotContainer.enc_R.getRate();
+
+    SmartDashboard.putNumber("Yaw Rate", navxYawAxisRate);
+    SmartDashboard.putNumber("Left Encoder Rate", shaftLeftRate);
+    SmartDashboard.putNumber("Right Encoder Rate", shaftRightRate);
+
+    double error = shaftLeftRate - shaftRightRate;
+    integral_DriveStraight += error;
+    double derivative = navxYawAxisRate; 
+
+    double correction = (error * Constants.kP_DriveStraight);
+    correction += (integral_DriveStraight * Constants.kI_DriveStraight);
+    correction += (derivative * Constants.kD_DriveStraight);
+
+    double left = yaxis - correction;
+    double right = yaxis + correction;
+
     drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
+
+
   }
 
+
   public void Drive_Steer(double yaxis, double zaxis) {
+
     double error = zaxis*Constants.swerveCoefficient;   
     double left = yaxis + error;
     double right = yaxis - error;
+
     drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
 
   }
 
-  public void Drive_Turn(double zaxis) {
 
-    double left = zaxis;
-    double right = -1 * (zaxis);
+  double integral_PointTurn = 0;
+
+  public void Drive_Turn(double zaxis) {
+    
+    double navxYawAxisRate = RobotContainer.navx.getRate();
+    double shaftLeftRate = RobotContainer.enc_L.getRate();
+    double shaftRightRate = RobotContainer.enc_R.getRate();
+
+    SmartDashboard.putNumber("Yaw Rate", navxYawAxisRate);
+    SmartDashboard.putNumber("Left Encoder Rate", shaftLeftRate);
+    SmartDashboard.putNumber("Right Encoder Rate", shaftRightRate);
+    
+    double error = shaftLeftRate + shaftRightRate;
+    integral_PointTurn += error;
+    double derivative = navxYawAxisRate; 
+
+    double correction = (error * Constants.kP_DriveTurn);
+    correction += (integral_PointTurn * Constants.kI_DriveTurn);
+    correction += (derivative * Constants.kD_DriveTurn);
+
+    double left = (zaxis + correction);
+    double right = -1 * (zaxis - correction);
+
     drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
     
   }

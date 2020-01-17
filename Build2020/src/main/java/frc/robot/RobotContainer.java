@@ -7,7 +7,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.DriveCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -26,9 +28,13 @@ public class RobotContainer {
   
   // Joystick kept public
   public static Joystick joy1 = new Joystick(1);
+  public static Encoder enc_L = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
+  public static Encoder enc_R = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
+  public static AHRS navx = new AHRS(SPI.Port.kMXP);
 
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final DriveCommand driveCommand = new DriveCommand(driveSubsystem);
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -37,6 +43,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(driveCommand);
+    
     
   }
 
