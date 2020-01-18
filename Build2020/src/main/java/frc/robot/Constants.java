@@ -24,10 +24,11 @@ public final class Constants {
     public final static int BL_port = 1;
 
     public final static double maxSpeed = 0.4;
-    public final static double swerveCoefficient = 0.6;
+    public final static double swerveCoefficient = 0.4;
     public final static double yDeadband = 0.1;
     public final static double zDeadband = 0.1;
-    
+
+    public final static double integralResetBound = 0.1;
     public final static double zTurnThreshold = 0.1;
 
     // PID Constants
