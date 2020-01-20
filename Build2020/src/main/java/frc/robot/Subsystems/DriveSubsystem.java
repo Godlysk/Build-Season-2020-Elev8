@@ -49,6 +49,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 
   double integral_DriveStraight = 0;
+  double prev_Error = 0;
 
   public void Drive_Straight(double yaxis) {
 
@@ -64,16 +65,18 @@ public class DriveSubsystem extends SubsystemBase {
 
     double error = shaftLeftRate - shaftRightRate;
     integral_DriveStraight += error * Constants.kI_DriveStraight;
-    double derivative = navxYawAxisRate * Constants.kD_DriveStraight; 
+    // double derivative = navxYawAxisRate * Constants.kD_DriveStraight;
+
+    double derivative = (error - prev_Error) * Constants.kD_DriveStraight;
+    prev_Error = error; 
+
 
     double correction = (error * Constants.kP_DriveStraight);
     correction += (integral_DriveStraight);
     correction += (derivative);
 
-    correction *= Math.signum(yaxis);
-
-    double left = yaxis + correction;
-    double right = yaxis - correction;
+    double left = yaxis - correction;
+    double right = yaxis + correction;
 
     drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
 

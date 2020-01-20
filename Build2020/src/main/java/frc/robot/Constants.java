@@ -25,16 +25,16 @@ public final class Constants {
 
     public final static double maxSpeed = 0.4;
     public final static double swerveCoefficient = 0.4;
-    public final static double yDeadband = 0.1;
-    public final static double zDeadband = 0.1;
+    public final static double yDeadband = 0.05;
+    public final static double zDeadband = 0.2;
 
     public final static double integralResetBound = 0.1;
     public final static double zTurnThreshold = 0.1;
 
     // PID Constants
-    public final static double kP_DriveStraight = 0.00005;
-    public final static double kI_DriveStraight = 0.000005;
-    public final static double kD_DriveStraight = 0.00005;
+    public static double kP_DriveStraight = 0;
+    public static double kI_DriveStraight = 0;
+    public static double kD_DriveStraight = 0;
 
     public final static double kP_DriveTurn = 0;
     public final static double kI_DriveTurn = 0;
@@ -47,7 +47,7 @@ public final class Constants {
 
     //Sigmoid function
     public static final double sigmoid(double value) {
-        return (1/( 1 + Math.pow(Math.E,(-1*value))));
+        return (1 /(1 + Math.pow(Math.E,(-1*value))));
     }
 
 

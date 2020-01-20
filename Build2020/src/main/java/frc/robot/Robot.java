@@ -97,6 +97,14 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("IR", IR);
     SmartDashboard.putString("Color", color);
 
+    SmartDashboard.putNumber("P", Constants.kP_DriveStraight);
+    SmartDashboard.putNumber("I", Constants.kI_DriveStraight);
+    SmartDashboard.putNumber("D", Constants.kD_DriveStraight);
+    
+    Constants.kP_DriveStraight = SmartDashboard.getNumber("P", 0);
+    Constants.kI_DriveStraight = SmartDashboard.getNumber("I", 0);
+    Constants.kD_DriveStraight = SmartDashboard.getNumber("D", 0);
+
 
   }
 
