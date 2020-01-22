@@ -47,7 +47,7 @@ public final class Constants {
 
     //Sigmoid function
     public static final double sigmoid(double value) {
-        return (1 /(1 + Math.pow(Math.E,(-1*value))));
+        return (1/(1 + Math.pow(Math.E, (-1*value))));
     }
 
 

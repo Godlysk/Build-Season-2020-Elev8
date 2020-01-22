@@ -64,7 +64,10 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Right Encoder Rate", shaftRightRate);
 
     double error = shaftLeftRate - shaftRightRate;
-    integral_DriveStraight += error * Constants.kI_DriveStraight;
+    integral_DriveStraight += (error * Constants.kI_DriveStraight);
+
+    SmartDashboard.putNumber("Error between Encoders", error);
+
     // double derivative = navxYawAxisRate * Constants.kD_DriveStraight;
 
     double derivative = (error - prev_Error) * Constants.kD_DriveStraight;
@@ -123,6 +126,10 @@ public class DriveSubsystem extends SubsystemBase {
     drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
     
   }
+
+  public void AutoTuneStraight() {
+    double kP;
+  } 
 
 
 

@@ -72,21 +72,12 @@ public class Robot extends TimedRobot {
     
     String color = "";
     
-    if(redgreen<=0.6 && redgreen>=0.54){
-      color = "yellow";
-    }
-    else if(redblue<=4.5 && redblue>=1.5){
-      color = "red";
-    }
-    else if(redblue<=0.9 && redblue>=0.54){
-      color = "green";
-    }
-    else if(redblue<=0.45 && redblue>=0.2){
-      color = "blue";
-    }
-    else{
-      color = "error";
-    }
+    if(redgreen<=0.6 && redgreen>=0.54) color = "yellow";
+    else if (redblue<=4.5 && redblue>=1.5)color = "red";
+    else if (redblue<=0.9 && redblue>=0.54) color = "green";
+    else if (redblue<=0.45 && redblue>=0.2) color = "blue";
+    else color = "error";
+  
 
     SmartDashboard.putNumber("Red", red);
     SmartDashboard.putNumber("Green", green);
@@ -96,10 +87,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Red by Blue", redblue);
     SmartDashboard.putNumber("IR", IR);
     SmartDashboard.putString("Color", color);
-
-    SmartDashboard.putNumber("P", Constants.kP_DriveStraight);
-    SmartDashboard.putNumber("I", Constants.kI_DriveStraight);
-    SmartDashboard.putNumber("D", Constants.kD_DriveStraight);
     
     Constants.kP_DriveStraight = SmartDashboard.getNumber("P", 0);
     Constants.kI_DriveStraight = SmartDashboard.getNumber("I", 0);
