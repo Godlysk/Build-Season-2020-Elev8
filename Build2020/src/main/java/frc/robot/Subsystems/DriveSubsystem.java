@@ -100,10 +100,10 @@ public class DriveSubsystem extends SubsystemBase {
     correction_NavX += (integral_NavX);
     correction_NavX += (derivative_NavX);
 
-    double left = yaxis - correction_NavX;
-    double right = yaxis + correction_NavX;
+    double left_NavX = yaxis - correction_NavX;
+    double right_NavX = yaxis + correction_NavX;
 
-    drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
+    drive(left_NavX*Constants.maxSpeed, right_NavX*Constants.maxSpeed);
 
   }
 
