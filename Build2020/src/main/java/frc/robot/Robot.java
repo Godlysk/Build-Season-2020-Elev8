@@ -42,9 +42,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
 
-    SmartDashboard.putNumber("P", 0);
-    SmartDashboard.putNumber("I", 0);
-    SmartDashboard.putNumber("D", 0);
+    SmartDashboard.putNumber("P", Constants.kP_NavX);
+    SmartDashboard.putNumber("I", Constants.kI_NavX);
+    SmartDashboard.putNumber("D", Constants.kD_NavX);
     
   }
 
@@ -92,9 +92,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("IR", IR);
     SmartDashboard.putString("Color", color);
     
-    Constants.kP_DriveStraight = SmartDashboard.getNumber("P", 0);
-    Constants.kI_DriveStraight = SmartDashboard.getNumber("I", 0);
-    Constants.kD_DriveStraight = SmartDashboard.getNumber("D", 0);
+    Constants.kP_NavX = SmartDashboard.getNumber("P", 0);
+    Constants.kI_NavX = SmartDashboard.getNumber("I", 0);
+    Constants.kD_NavX = SmartDashboard.getNumber("D", 0);
 
 
   }

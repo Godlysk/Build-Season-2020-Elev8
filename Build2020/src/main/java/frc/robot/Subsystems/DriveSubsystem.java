@@ -55,11 +55,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     if (Math.abs(yaxis) < Constants.integralResetBound) integral_DriveStraight = 0;
 
-    double navxYawAxisRate = RobotContainer.navx.getRate();
     double shaftLeftRate = RobotContainer.enc_L.getRate();
     double shaftRightRate = RobotContainer.enc_R.getRate();
 
-    SmartDashboard.putNumber("Yaw Rate", navxYawAxisRate);
     SmartDashboard.putNumber("Left Encoder Rate", shaftLeftRate);
     SmartDashboard.putNumber("Right Encoder Rate", shaftRightRate);
 
@@ -80,6 +78,32 @@ public class DriveSubsystem extends SubsystemBase {
 
     drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
 
+  }
+
+  double integral_NavX = 0;
+  double prev_Error_NavX = 0;
+
+  public void Drive_NavX(double yaxis) {
+
+    if (Math.abs(yaxis) < Constants.integralResetBound) integral_NavX = 0;
+
+    double navxYawAxisRate = RobotContainer.navx.getRate();
+    SmartDashboard.putNumber("Yaw Rate", navxYawAxisRate);
+
+    double error_NavX = navxYawAxisRate;
+    integral_DriveStraight += (navxYawAxisRate * Constants.kI_NavX);
+
+    double derivative_NavX = (error_NavX - prev_Error_NavX) * Constants.kD_NavX;
+    prev_Error_NavX = error_NavX; 
+
+    double correction_NavX = (error_NavX * Constants.kP_NavX);
+    correction_NavX += (integral_NavX);
+    correction_NavX += (derivative_NavX);
+
+    double left = yaxis - correction_NavX;
+    double right = yaxis + correction_NavX;
+
+    drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
 
   }
 
@@ -89,7 +113,6 @@ public class DriveSubsystem extends SubsystemBase {
     double error = zaxis*Constants.swerveCoefficient;
     double left = yaxis + error;
     double right = yaxis - error;
-
     drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
 
   }
@@ -101,21 +124,17 @@ public class DriveSubsystem extends SubsystemBase {
 
     if (Math.abs(zaxis) < Constants.integralResetBound) integral_PointTurn = 0;
     
-    double navxYawAxisRate = RobotContainer.navx.getRate();
     double shaftLeftRate = RobotContainer.enc_L.getRate();
     double shaftRightRate = RobotContainer.enc_R.getRate();
 
-    SmartDashboard.putNumber("Yaw Rate", navxYawAxisRate);
     SmartDashboard.putNumber("Left Encoder Rate", shaftLeftRate);
     SmartDashboard.putNumber("Right Encoder Rate", shaftRightRate);
     
     double error = shaftLeftRate + shaftRightRate;
     integral_PointTurn += error;
-    double derivative = navxYawAxisRate; 
 
     double correction = (error * Constants.kP_DriveTurn);
     correction += (integral_PointTurn * Constants.kI_DriveTurn);
-    correction += (derivative * Constants.kD_DriveTurn);
 
     double left = (zaxis + correction);
     double right = -1 * (zaxis - correction);
@@ -124,5 +143,7 @@ public class DriveSubsystem extends SubsystemBase {
     
   }
 
-  
+
+
+
 }
