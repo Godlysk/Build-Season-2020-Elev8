@@ -68,11 +68,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     SmartDashboard.putNumber("Error between Encoders", error);
 
-    // double derivative = navxYawAxisRate * Constants.kD_DriveStraight;
-
     double derivative = (error - prev_Error) * Constants.kD_DriveStraight;
     prev_Error = error; 
-
 
     double correction = (error * Constants.kP_DriveStraight);
     correction += (integral_DriveStraight);
@@ -89,7 +86,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void Drive_Steer(double yaxis, double zaxis) {
 
-    double error = zaxis*Constants.swerveCoefficient;   
+    double error = zaxis*Constants.swerveCoefficient;
     double left = yaxis + error;
     double right = yaxis - error;
 
@@ -127,10 +124,5 @@ public class DriveSubsystem extends SubsystemBase {
     
   }
 
-  public void AutoTuneStraight() {
-    double kP;
-  } 
-
-
-
+  
 }
