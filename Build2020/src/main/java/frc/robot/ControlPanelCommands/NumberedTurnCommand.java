@@ -9,7 +9,7 @@ package frc.robot.ControlPanelCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -28,7 +28,7 @@ public class NumberedTurnCommand extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.controlPanelSubsystem = (ControlPanelSubsystem)controlPanelSubsystem;
     addRequirements(controlPanelSubsystem);
-    turns = SmartDashboard.getNumber("turns", 0);
+    turns = 2.0;//SmartDashboard.getNumber("turns", 0);
   }
 
   // Called when the command is initially scheduled.
@@ -43,7 +43,7 @@ public class NumberedTurnCommand extends CommandBase {
     {
       controlPanelSubsystem.setSpeed(Constants.wheelMaxSpeed);
       String color = controlPanelSubsystem.color;
-      if(!controlPanelSubsystem.p_color.equals(color)){
+      if(!controlPanelSubsystem.p_color.equals(color) && !color.equals("error")){
         controlPanelSubsystem.p_color = color;
         Robot.colors.add(controlPanelSubsystem.p_color);
       }

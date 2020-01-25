@@ -21,7 +21,7 @@ public class TurnToColorCommand extends CommandBase{
     public TurnToColorCommand(Subsystem controlPanelSubsystem){
         this.controlPanelSubsystem = (ControlPanelSubsystem) controlPanelSubsystem;
         addRequirements(controlPanelSubsystem);
-        targetColor = SmartDashboard.getString("target_color", "");
+        targetColor = "green";//SmartDashboard.getString("target_color", "");
     }
 
     @Override

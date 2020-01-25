@@ -8,6 +8,8 @@
 package frc.robot;
 
 import java.util.ArrayList;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -57,6 +59,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    
+    SmartDashboard.putString("Game Data", DriverStation.getInstance().getGameSpecificMessage());
     
     Constants.kP_DriveStraight = SmartDashboard.getNumber("P", 0);
     Constants.kI_DriveStraight = SmartDashboard.getNumber("I", 0);

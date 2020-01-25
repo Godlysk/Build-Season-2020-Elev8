@@ -7,17 +7,17 @@
 
 package frc.robot.Subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorSensorV3.RawColor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.VictorSP;
 
 public class ControlPanelSubsystem extends SubsystemBase{
 
-    private final WPI_TalonSRX CP;
+    private final VictorSP CP;
 
     public String p_color = "";
 
@@ -31,7 +31,7 @@ public class ControlPanelSubsystem extends SubsystemBase{
     private ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
     public ControlPanelSubsystem(){
-        CP = new WPI_TalonSRX(Constants.CP_port);
+        CP = new VictorSP(Constants.CP_port);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ControlPanelSubsystem extends SubsystemBase{
         double redblue = red/blue;
 
         color = colorDetection(red, green, blue);
-
+            
         SmartDashboard.putNumber("Red", red);
         SmartDashboard.putNumber("Green", blue);
         SmartDashboard.putNumber("Blue", green);
@@ -70,17 +70,18 @@ public class ControlPanelSubsystem extends SubsystemBase{
     public String colorDetection(double red, double green, double blue){
         double redgreen = red/green;
         double redblue = red/blue;
-        if(redgreen<=0.6 && redgreen>=0.54){
+        double greenblue =green/blue;
+        if(redgreen>=0.5 && redgreen<=0.65 && greenblue>=4.1 && greenblue<=5.6){
             return "yellow";
         }
-        else if(redblue<=4.5 && redblue>=1.5){
-            return "red";
+        else if(redblue>=0.25 && redblue<=0.7 && greenblue>=1 && greenblue<=1.6){
+            return "blue";
         }
-        else if(redblue<=0.9 && redblue>=0.54){
+        else if(redblue>=1 && redblue<=1.2 && redgreen>=0.275 && redgreen<=0.5){
             return "green";
         }
-        else if(redblue<=0.45 && redblue>=0.2){
-            return "blue";
+        else if(redblue>=1.5 && redblue<=4.9 && redgreen>=0.75 && redgreen<=1.6){
+            return "red";
         }
         else{
             return "error";

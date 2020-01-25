@@ -31,7 +31,7 @@ public class RobotContainer {
   
   // Joystick kept public
   public static Joystick joy1 = new Joystick(1);  
-  public static Joystick joy2 = new Joystick(2);
+  // public static Joystick joy2 = new Joystick(2);
   public static Encoder enc_L = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
   public static Encoder enc_R = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
@@ -60,8 +60,8 @@ public class RobotContainer {
    
     JoystickButton commandBrakeButton = new JoystickButton(joy1, Constants.brakeButtonNumber);
     JoystickButton commandSteerButton = new JoystickButton(joy1, Constants.steerButtonNumber);
-    JoystickButton numberedTurnsButton = new JoystickButton(joy2, Constants.numberedTurnsButtonNumber);
-    JoystickButton turnToColorButton = new JoystickButton(joy2, Constants.turnToColorButtonNumber);
+    JoystickButton numberedTurnsButton = new JoystickButton(joy1, Constants.numberedTurnsButtonNumber);
+    JoystickButton turnToColorButton = new JoystickButton(joy1, Constants.turnToColorButtonNumber);
     
     commandBrakeButton.whenPressed(new BrakeCommand(driveSubsystem));
     commandSteerButton.whenPressed(new SteerCommand(driveSubsystem));
