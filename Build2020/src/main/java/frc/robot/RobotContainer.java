@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.BrakeCommand;
 import frc.robot.Commands.SteerCommand;
 import frc.robot.Subsystems.DriveSubsystem;
+import frc.robot.Subsystems.ControlPanelSubsystem;
+import frc.robot.ControlPanelCommands.NumberedTurnCommand;
+import frc.robot.ControlPanelCommands.TurnToColorCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -27,13 +30,15 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   
   // Joystick kept public
-  public static Joystick joy1 = new Joystick(1);
+  public static Joystick joy1 = new Joystick(1);  
+  public static Joystick joy2 = new Joystick(2);
   public static Encoder enc_L = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
   public static Encoder enc_R = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
 
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final DriveCommand driveCommand = new DriveCommand(driveSubsystem);
+  private final ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
 
 
   /**
@@ -42,9 +47,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    driveSubsystem.setDefaultCommand(driveCommand);
-    
-    
+    driveSubsystem.setDefaultCommand(driveCommand);  
   }
 
   /**
@@ -57,9 +60,13 @@ public class RobotContainer {
    
     JoystickButton commandBrakeButton = new JoystickButton(joy1, Constants.brakeButtonNumber);
     JoystickButton commandSteerButton = new JoystickButton(joy1, Constants.steerButtonNumber);
+    JoystickButton numberedTurnsButton = new JoystickButton(joy2, Constants.numberedTurnsButtonNumber);
+    JoystickButton turnToColorButton = new JoystickButton(joy2, Constants.turnToColorButtonNumber);
     
     commandBrakeButton.whenPressed(new BrakeCommand(driveSubsystem));
     commandSteerButton.whenPressed(new SteerCommand(driveSubsystem));
+    numberedTurnsButton.toggleWhenPressed(new NumberedTurnCommand(controlPanelSubsystem));
+    turnToColorButton.toggleWhenPressed(new TurnToColorCommand(controlPanelSubsystem));
 
   }
 

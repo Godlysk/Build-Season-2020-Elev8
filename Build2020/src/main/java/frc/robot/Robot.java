@@ -7,10 +7,7 @@
 
 package frc.robot;
 
-import com.revrobotics.ColorSensorV3;
-import com.revrobotics.ColorSensorV3.RawColor;
-
-import edu.wpi.first.wpilibj.I2C;
+import java.util.ArrayList;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,10 +24,8 @@ public class Robot extends TimedRobot {
   
   Command autonomousCommand;
   RobotContainer robotContainer;
-  
 
-  private final I2C.Port i2cPort = I2C.Port.kOnboard;
-  private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+  public static ArrayList<String> colors = new ArrayList<>();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -62,35 +57,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-
-
-    RawColor detectedColor = colorSensor.getRawColor();
-    double IR = colorSensor.getIR();
-
-    double red = detectedColor.red;
-    double green = detectedColor.green;
-    double blue = detectedColor.blue;
-    double redgreen = red/green;
-    double greenblue = green/blue;
-    double redblue = red/blue;
-    
-    String color = "";
-    
-    if(redgreen<=0.6 && redgreen>=0.54) color = "yellow";
-    else if (redblue<=4.5 && redblue>=1.5)color = "red";
-    else if (redblue<=0.9 && redblue>=0.54) color = "green";
-    else if (redblue<=0.45 && redblue>=0.2) color = "blue";
-    else color = "error";
-  
-
-    SmartDashboard.putNumber("Red", red);
-    SmartDashboard.putNumber("Green", green);
-    SmartDashboard.putNumber("Blue", blue);
-    SmartDashboard.putNumber("Red by Green", redgreen);
-    SmartDashboard.putNumber("Green by Blue", greenblue);
-    SmartDashboard.putNumber("Red by Blue", redblue);
-    SmartDashboard.putNumber("IR", IR);
-    SmartDashboard.putString("Color", color);
     
     Constants.kP_DriveStraight = SmartDashboard.getNumber("P", 0);
     Constants.kI_DriveStraight = SmartDashboard.getNumber("I", 0);
