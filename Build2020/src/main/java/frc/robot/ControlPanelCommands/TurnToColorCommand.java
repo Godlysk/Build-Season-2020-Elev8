@@ -10,6 +10,7 @@ package frc.robot.ControlPanelCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.Subsystems.ControlPanelSubsystem;
 
 public class TurnToColorCommand extends CommandBase{
@@ -32,7 +33,7 @@ public class TurnToColorCommand extends CommandBase{
     @Override
     public void execute(){
         while (!targetColor.equals(controlPanelSubsystem.color)){
-            controlPanelSubsystem.setSpeed(0.5);
+            controlPanelSubsystem.setSpeed(Constants.wheelMaxSpeed);
         }
         controlPanelSubsystem.setSpeed(0.0);
     }
@@ -40,7 +41,7 @@ public class TurnToColorCommand extends CommandBase{
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        
+
     }
 
     // Returns true when the command should end.

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Subsystems.ControlPanelSubsystem;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,7 +41,7 @@ public class NumberedTurnCommand extends CommandBase {
   public void execute() {
     while(turns != turnsMade())
     {
-      controlPanelSubsystem.setSpeed(0.5d);
+      controlPanelSubsystem.setSpeed(Constants.wheelMaxSpeed);
       String color = controlPanelSubsystem.color;
       if(!controlPanelSubsystem.p_color.equals(color)){
         controlPanelSubsystem.p_color = color;
