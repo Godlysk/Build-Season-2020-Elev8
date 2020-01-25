@@ -10,6 +10,7 @@ package frc.robot;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorSensorV3.RawColor;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -91,6 +92,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Red by Blue", redblue);
     SmartDashboard.putNumber("IR", IR);
     SmartDashboard.putString("Color", color);
+
+    SmartDashboard.putString("Game Data", DriverStation.getInstance().getGameSpecificMessage());
     
     Constants.kP_NavX = SmartDashboard.getNumber("P", 0);
     Constants.kI_NavX = SmartDashboard.getNumber("I", 0);
