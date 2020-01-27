@@ -11,6 +11,7 @@ package frc.robot.ControlPanelCommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.Subsystems.ControlPanelSubsystem;
 
 public class TurnToColorCommand extends CommandBase{
@@ -44,7 +45,7 @@ public class TurnToColorCommand extends CommandBase{
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return targetColor.equals(controlPanelSubsystem.color);
+        return targetColor.equals(Robot.color);
     }
 
 }

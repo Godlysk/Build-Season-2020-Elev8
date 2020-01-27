@@ -14,6 +14,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import com.revrobotics.ColorSensorV3;
+import com.revrobotics.ColorSensorV3.RawColor;
+import edu.wpi.first.wpilibj.I2C;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,6 +32,17 @@ public class Robot extends TimedRobot {
 
   //This arraylist keeps track of the colors detected by the color sensor
   public static ArrayList<String> colors = new ArrayList<>();
+
+  public static String p_color = "";
+
+  public static double red = 0.0d;
+  public static double green = 0.0d;    
+  public static double blue = 0.0d;
+
+  public static String color = "";
+
+  private static I2C.Port i2cPort = I2C.Port.kOnboard;
+  private static ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -62,6 +76,27 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     
     SmartDashboard.putString("Game Data", DriverStation.getInstance().getGameSpecificMessage());
+
+    RawColor detectedColor = colorSensor.getRawColor();
+    double IR = colorSensor.getIR();
+
+    red = detectedColor.red;
+    green = detectedColor.green;
+    blue = detectedColor.blue;
+    double redgreen = red/green;
+    double greenblue = green/blue;
+    double redblue = red/blue;
+
+    color = colorDetection(red, green, blue);
+        
+    SmartDashboard.putNumber("Red", red);
+    SmartDashboard.putNumber("Green", blue);
+    SmartDashboard.putNumber("Blue", green);
+    SmartDashboard.putNumber("Red by Green", redgreen);
+    SmartDashboard.putNumber("Green by Blue", greenblue);
+    SmartDashboard.putNumber("Red by Blue", redblue);
+    SmartDashboard.putNumber("IR", IR);
+    SmartDashboard.putString("Color", color);
     
     Constants.kP_DriveStraight = SmartDashboard.getNumber("P", 0);
     Constants.kI_DriveStraight = SmartDashboard.getNumber("I", 0);
@@ -69,6 +104,27 @@ public class Robot extends TimedRobot {
 
 
   }
+
+  public String colorDetection(double red, double green, double blue){
+    double redgreen = red/green;
+    double redblue = red/blue;
+    double greenblue =green/blue;
+    if(redgreen>=0.5 && redgreen<=0.65 && greenblue>=4.1 && greenblue<=5.6){
+        return "yellow";
+    }
+    else if(redblue>=0.25 && redblue<=0.7 && greenblue>=1 && greenblue<=1.6){
+        return "blue";
+    }
+    else if(redblue>=1 && redblue<=1.2 && redgreen>=0.275 && redgreen<=0.5){
+        return "green";
+    }
+    else if(redblue>=1.5 && redblue<=4.9 && redgreen>=0.75 && redgreen<=1.6){
+        return "red";
+    }
+    else{
+        return "error";
+    }
+  } 
 
   /**
    * This function is called once each time the robot enters Disabled mode.

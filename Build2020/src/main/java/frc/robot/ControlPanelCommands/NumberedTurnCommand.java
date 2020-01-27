@@ -38,10 +38,10 @@ public class NumberedTurnCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    String color = controlPanelSubsystem.color;
-    if(!controlPanelSubsystem.p_color.equals(color) && !color.equals("error")){
-      controlPanelSubsystem.p_color = color;
-      Robot.colors.add(controlPanelSubsystem.p_color);
+    String color = Robot.color;
+    if(!Robot.p_color.equals(color) && !color.equals("error")){
+      Robot.p_color = color;
+      Robot.colors.add(Robot.p_color);
     }
   }
   
