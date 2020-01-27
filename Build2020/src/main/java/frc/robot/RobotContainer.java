@@ -18,6 +18,7 @@ import frc.robot.Commands.SteerCommand;
 import frc.robot.Subsystems.DriveSubsystem;
 import frc.robot.Subsystems.ControlPanelSubsystem;
 import frc.robot.ControlPanelCommands.NumberedTurnCommand;
+import frc.robot.ControlPanelCommands.Test_Wheel;
 import frc.robot.ControlPanelCommands.TurnToColorCommand;
 
 /**
@@ -39,6 +40,7 @@ public class RobotContainer {
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final DriveCommand driveCommand = new DriveCommand(driveSubsystem);
   private final ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  private final Test_Wheel test_WheelCommand = new Test_Wheel(controlPanelSubsystem);
 
 
   /**
@@ -48,6 +50,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(driveCommand);  
+    controlPanelSubsystem.setDefaultCommand(test_WheelCommand);
   }
 
   /**

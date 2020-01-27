@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
   Command autonomousCommand;
   RobotContainer robotContainer;
 
+  //This arraylist keeps track of the colors detected by the color sensor
   public static ArrayList<String> colors = new ArrayList<>();
 
   /**
