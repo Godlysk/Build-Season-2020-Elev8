@@ -7,16 +7,16 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
+import com.revrobotics.ColorSensorV3;
+import com.revrobotics.ColorSensorV3.RawColor;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import com.revrobotics.ColorSensorV3;
-import com.revrobotics.ColorSensorV3.RawColor;
-import edu.wpi.first.wpilibj.I2C;
+import java.util.ArrayList;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,7 +29,6 @@ public class Robot extends TimedRobot {
   
   Command autonomousCommand;
   RobotContainer robotContainer;
-
   //This arraylist keeps track of the colors detected by the color sensor
   public static ArrayList<String> colors = new ArrayList<>();
 
@@ -40,9 +39,9 @@ public class Robot extends TimedRobot {
   public static double blue = 0.0d;
 
   public static String color = "";
-
-  private static I2C.Port i2cPort = I2C.Port.kOnboard;
-  private static ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+  
+  private final I2C.Port i2cPort = I2C.Port.kOnboard;
+  private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -54,9 +53,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
 
-    SmartDashboard.putNumber("P", 0);
-    SmartDashboard.putNumber("I", 0);
-    SmartDashboard.putNumber("D", 0);
+    SmartDashboard.putNumber("P", Constants.kP_NavX);
+    SmartDashboard.putNumber("I", Constants.kI_NavX);
+    SmartDashboard.putNumber("D", Constants.kD_NavX);
     
   }
 
@@ -74,8 +73,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    
-    SmartDashboard.putString("Game Data", DriverStation.getInstance().getGameSpecificMessage());
+
 
     RawColor detectedColor = colorSensor.getRawColor();
     double IR = colorSensor.getIR();
@@ -86,21 +84,23 @@ public class Robot extends TimedRobot {
     double redgreen = red/green;
     double greenblue = green/blue;
     double redblue = red/blue;
-
-    color = colorDetection(red, green, blue);
-        
+    
+    String color = colorDetection(red, green, blue);
+  
     SmartDashboard.putNumber("Red", red);
-    SmartDashboard.putNumber("Green", blue);
-    SmartDashboard.putNumber("Blue", green);
+    SmartDashboard.putNumber("Green", green);
+    SmartDashboard.putNumber("Blue", blue);
     SmartDashboard.putNumber("Red by Green", redgreen);
     SmartDashboard.putNumber("Green by Blue", greenblue);
     SmartDashboard.putNumber("Red by Blue", redblue);
     SmartDashboard.putNumber("IR", IR);
     SmartDashboard.putString("Color", color);
+
+    SmartDashboard.putString("Game Data", DriverStation.getInstance().getGameSpecificMessage());
     
-    Constants.kP_DriveStraight = SmartDashboard.getNumber("P", 0);
-    Constants.kI_DriveStraight = SmartDashboard.getNumber("I", 0);
-    Constants.kD_DriveStraight = SmartDashboard.getNumber("D", 0);
+    Constants.kP_NavX = SmartDashboard.getNumber("P", 0);
+    Constants.kI_NavX = SmartDashboard.getNumber("I", 0);
+    Constants.kD_NavX = SmartDashboard.getNumber("D", 0);
 
 
   }
@@ -124,7 +124,7 @@ public class Robot extends TimedRobot {
     else{
         return "error";
     }
-  } 
+  }
 
   /**
    * This function is called once each time the robot enters Disabled mode.

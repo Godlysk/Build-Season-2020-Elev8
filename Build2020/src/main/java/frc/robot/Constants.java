@@ -35,20 +35,24 @@ public final class Constants {
     public final static double zTurnThreshold = 0.1;
 
     // PID Constants
-    public static double kP_DriveStraight = 0;
-    public static double kI_DriveStraight = 0;
-    public static double kD_DriveStraight = 0;
+    public static double kP_DriveStraight = 4.0 * Math.pow(10, -4);
+    public static double kI_DriveStraight = 2.0 * Math.pow(10, -4);
+    public static double kD_DriveStraight = 2.0 * Math.pow(10, -4);
 
-    public final static double kP_DriveTurn = 0;
-    public final static double kI_DriveTurn = 0;
-    public final static double kD_DriveTurn = 0;
+    public static double kP_DriveTurn = 0;
+    public static double kI_DriveTurn = 0;
+    public static double kD_DriveTurn = 0;
+
+    public static double kP_NavX = 0;
+    public static double kI_NavX = 0;
+    public static double kD_NavX = 0;
 
 
     //Buttons
     public final static int steerButtonNumber = 2;
     public final static int brakeButtonNumber = 7;
-    public final static int numberedTurnsButtonNumber = 3; 
-    public final static int turnToColorButtonNumber = 4;
+    public final static int turnToColorButtonNumber = 3;
+    public final static int numberedTurnsButtonNumber = 4;
 
     //Sigmoid function
     public static final double sigmoid(double value) {
