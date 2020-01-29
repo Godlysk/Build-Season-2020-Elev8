@@ -23,6 +23,9 @@ public final class Constants {
     public final static int BR_port = 4;
     public final static int BL_port = 1;
 
+    public final static int CP_port = 8;
+
+    public final static double wheelMaxSpeed = 0.3;
     public final static double maxSpeed = 0.4;
     public final static double swerveCoefficient = 0.4;
     public final static double yDeadband = 0.05;
@@ -39,6 +42,8 @@ public final class Constants {
     public static double kP_DriveTurn = 0;
     public static double kI_DriveTurn = 0;
     public static double kD_DriveTurn = 0;
+    
+
 
     public static double kP_NavX = 0;
     public static double kI_NavX = 0;
@@ -48,6 +53,8 @@ public final class Constants {
     //Buttons
     public final static int steerButtonNumber = 2;
     public final static int brakeButtonNumber = 7;
+    public final static int rotationButtonNumber = 3;
+    public final static int positionButtonNumber = 4;
 
     //Sigmoid function
     public static final double sigmoid(double value) {

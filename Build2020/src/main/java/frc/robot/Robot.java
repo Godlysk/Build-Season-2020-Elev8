@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorSensorV3.RawColor;
 
@@ -29,7 +31,16 @@ public class Robot extends TimedRobot {
   Command autonomousCommand;
   RobotContainer robotContainer;
   
+  public static ArrayList<String> colors = new ArrayList<>();
 
+  public static String p_color = "";
+
+  public static double red = 0.0;
+  public static double green = 0.0;    
+  public static double blue = 0.0;
+
+  public static String color = "";
+  
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
@@ -75,15 +86,8 @@ public class Robot extends TimedRobot {
     double greenblue = green/blue;
     double redblue = red/blue;
     
-    String color = "";
-    
-    if(redgreen<=0.6 && redgreen>=0.54) color = "yellow";
-    else if (redblue<=4.5 && redblue>=1.5)color = "red";
-    else if (redblue<=0.9 && redblue>=0.54) color = "green";
-    else if (redblue<=0.45 && redblue>=0.2) color = "blue";
-    else color = "error";
+    String color = colorDetection(red, green, blue);
   
-
     SmartDashboard.putNumber("Red", red);
     SmartDashboard.putNumber("Green", green);
     SmartDashboard.putNumber("Blue", blue);
@@ -99,6 +103,30 @@ public class Robot extends TimedRobot {
     Constants.kI_NavX = SmartDashboard.getNumber("I", 0);
     Constants.kD_NavX = SmartDashboard.getNumber("D", 0);
 
+
+  }
+
+  public String colorDetection(double red, double green, double blue) {
+    
+    double redgreen = red/green;
+    double redblue = red/blue;
+    double greenblue = green/blue;
+
+    if(redgreen>=0.5 && redgreen<=0.65 && greenblue>=4.1 && greenblue<=5.6){
+        return "Y";
+    }
+    else if(redblue>=0.25 && redblue<=0.7 && greenblue>=1 && greenblue<=1.6){
+        return "B";
+    }
+    else if(redblue>=1 && redblue<=1.2 && redgreen>=0.275 && redgreen<=0.5){
+        return "G";
+    }
+    else if(redblue>=1.5 && redblue<=4.9 && redgreen>=0.75 && redgreen<=1.6){
+        return "R";
+    }
+    else{
+        return "ERROR";
+    }
 
   }
 

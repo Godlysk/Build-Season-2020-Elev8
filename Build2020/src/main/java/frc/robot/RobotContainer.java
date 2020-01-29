@@ -12,9 +12,12 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.DriveCommand;
+import frc.robot.Commands.PositionCommand;
+import frc.robot.Commands.RotationCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.BrakeCommand;
 import frc.robot.Commands.SteerCommand;
+import frc.robot.Subsystems.ControlPanelSubsystem;
 import frc.robot.Subsystems.DriveSubsystem;
 
 /**
@@ -33,6 +36,8 @@ public class RobotContainer {
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
 
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  private final ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  
   private final DriveCommand driveCommand = new DriveCommand(driveSubsystem);
 
 
@@ -43,7 +48,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(driveCommand);
-    
     
   }
 
@@ -57,9 +61,13 @@ public class RobotContainer {
    
     JoystickButton commandBrakeButton = new JoystickButton(joy1, Constants.brakeButtonNumber);
     JoystickButton commandSteerButton = new JoystickButton(joy1, Constants.steerButtonNumber);
+    JoystickButton rotationControlButton = new JoystickButton(joy1, Constants.rotationButtonNumber);
+    JoystickButton positionControlButton = new JoystickButton(joy1, Constants.positionButtonNumber);
     
     commandBrakeButton.whenPressed(new BrakeCommand(driveSubsystem));
     commandSteerButton.whenPressed(new SteerCommand(driveSubsystem));
+    rotationControlButton.whenPressed(new RotationCommand(controlPanelSubsystem));
+    positionControlButton.whenPressed(new PositionCommand(controlPanelSubsystem));
 
   }
 
