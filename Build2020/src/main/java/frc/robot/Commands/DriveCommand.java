@@ -48,7 +48,7 @@ public class DriveCommand extends CommandBase {
     if (Math.abs(zaxis) > Constants.zTurnThreshold) {
       driveSubsystem.Drive_Turn(zaxis);
     } else {
-      if (yaxis != 0) driveSubsystem.Drive_NavX(yaxis);
+      if (yaxis != 0) driveSubsystem.Drive_Straight(yaxis);
       else driveSubsystem.drive(0, 0);
     }
     

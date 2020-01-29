@@ -51,7 +51,12 @@ public class DriveSubsystem extends SubsystemBase {
   double integral_DriveStraight = 0;
   double prev_Error = 0;
 
+  double integral_NavX = 0;
+  double prev_Error_NavX = 0;
+
   public void Drive_Straight(double yaxis) {
+
+    // Encoder PID
 
     if (Math.abs(yaxis) < Constants.integralResetBound) integral_DriveStraight = 0;
 
@@ -73,17 +78,7 @@ public class DriveSubsystem extends SubsystemBase {
     correction += (integral_DriveStraight);
     correction += (derivative);
 
-    double left = yaxis - correction;
-    double right = yaxis + correction;
-
-    drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
-
-  }
-
-  double integral_NavX = 0;
-  double prev_Error_NavX = 0;
-
-  public void Drive_NavX(double yaxis) {
+    // NAVX PID
 
     if (Math.abs(yaxis) < Constants.integralResetBound) integral_NavX = 0;
 
@@ -100,12 +95,13 @@ public class DriveSubsystem extends SubsystemBase {
     correction_NavX += (integral_NavX);
     correction_NavX += (derivative_NavX);
 
-    double left_NavX = yaxis - correction_NavX;
-    double right_NavX = yaxis + correction_NavX;
+    double left = yaxis - correction - correction_NavX;
+    double right = yaxis + correction + correction_NavX;
 
-    drive(left_NavX*Constants.maxSpeed, right_NavX*Constants.maxSpeed);
+    drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
 
   }
+
 
 
   public void Drive_Steer(double yaxis, double zaxis) {

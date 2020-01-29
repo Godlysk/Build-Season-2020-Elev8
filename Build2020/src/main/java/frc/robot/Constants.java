@@ -34,16 +34,15 @@ public final class Constants {
     public final static double integralResetBound = 0.1;
     public final static double zTurnThreshold = 0.1;
 
-    // PID Constants
+    // PID Constants // Do it better
     public static double kP_DriveStraight = 4.0 * Math.pow(10, -4);
-    public static double kI_DriveStraight = 2.0 * Math.pow(10, -4);
-    public static double kD_DriveStraight = 2.0 * Math.pow(10, -4);
+    public static double kI_DriveStraight = 1.5 * Math.pow(10, -4);
+    public static double kD_DriveStraight = 3.0 * Math.pow(10, -4);
 
     public static double kP_DriveTurn = 0;
     public static double kI_DriveTurn = 0;
     public static double kD_DriveTurn = 0;
     
-
 
     public static double kP_NavX = 0;
     public static double kI_NavX = 0;
