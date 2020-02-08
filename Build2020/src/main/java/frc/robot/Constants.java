@@ -24,6 +24,8 @@ public final class Constants {
     public final static int BL_port = 1;
 
     public final static int CP_port = 8;
+    public final static int SF_port = 1;
+    public final static int SR_port = 2;
 
     public final static double wheelMaxSpeed = 0.3;
     public final static double maxSpeed = 0.4;
@@ -54,6 +56,7 @@ public final class Constants {
     public final static int brakeButtonNumber = 7;
     public final static int rotationButtonNumber = 3;
     public final static int positionButtonNumber = 4;
+    public final static int solenoidButtonNumber = 11;
 
     //Sigmoid function
     public static final double sigmoid(double value) {

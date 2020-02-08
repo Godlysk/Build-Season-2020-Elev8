@@ -11,14 +11,17 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Commands.DriveCommand;
-import frc.robot.Commands.PositionCommand;
-import frc.robot.Commands.RotationCommand;
+import frc.robot.DriveCommands.DriveCommand;
+import frc.robot.ControlPanelCommands.PositionCommand;
+import frc.robot.ControlPanelCommands.RotationCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Commands.BrakeCommand;
-import frc.robot.Commands.SteerCommand;
+import frc.robot.DriveCommands.BrakeCommand;
+import frc.robot.DriveCommands.SteerCommand;
+import frc.robot.SolenoidCommands.UpCommand;
+import frc.robot.SolenoidCommands.DownCommand;
 import frc.robot.Subsystems.ControlPanelSubsystem;
 import frc.robot.Subsystems.DriveSubsystem;
+import frc.robot.Subsystems.SolenoidSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -37,9 +40,10 @@ public class RobotContainer {
 
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
   
   private final DriveCommand driveCommand = new DriveCommand(driveSubsystem);
-
+  private final UpCommand upCommand = new UpCommand(solenoidSubsystem);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -48,7 +52,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(driveCommand);
-    
+    solenoidSubsystem.setDefaultCommand(upCommand);
   }
 
   /**
@@ -63,11 +67,18 @@ public class RobotContainer {
     JoystickButton commandSteerButton = new JoystickButton(joy1, Constants.steerButtonNumber);
     JoystickButton rotationControlButton = new JoystickButton(joy1, Constants.rotationButtonNumber);
     JoystickButton positionControlButton = new JoystickButton(joy1, Constants.positionButtonNumber);
+    JoystickButton solenoidButton = new JoystickButton(joy1, Constants.solenoidButtonNumber);
     
     commandBrakeButton.whenPressed(new BrakeCommand(driveSubsystem));
     commandSteerButton.whenPressed(new SteerCommand(driveSubsystem));
-    rotationControlButton.whenPressed(new RotationCommand(controlPanelSubsystem));
-    positionControlButton.whenPressed(new PositionCommand(controlPanelSubsystem));
+
+    // rotationControlButton.whenPressed(new RotationCommand(controlPanelSubsystem));  
+    // positionControlButton.whenPressed(new PositionCommand(controlPanelSubsystem));
+
+    rotationControlButton.toggleWhenPressed(new RotationCommand(controlPanelSubsystem));
+    positionControlButton.toggleWhenPressed(new PositionCommand(controlPanelSubsystem));
+
+    solenoidButton.whileHeld(new DownCommand(solenoidSubsystem));    
 
   }
 

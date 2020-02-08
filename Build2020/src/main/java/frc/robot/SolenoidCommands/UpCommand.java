@@ -5,21 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.Commands;
+package frc.robot.SolenoidCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Subsystems.SolenoidSubsystem;
 
-public class ShutDownControlPanelCommand extends CommandBase {
+public class UpCommand extends CommandBase {
+
+  private final SolenoidSubsystem solenoidSubsystem;
   /**
-   * Creates a new ShutDownControlPanelCommand.
+   * Creates a new UpCommand.
    */
-  public ShutDownControlPanelCommand() {
+  public UpCommand(Subsystem solenoidSubsystem) {
+    this.solenoidSubsystem = (SolenoidSubsystem)solenoidSubsystem;
+    addRequirements(solenoidSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    solenoidSubsystem.setMode(1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

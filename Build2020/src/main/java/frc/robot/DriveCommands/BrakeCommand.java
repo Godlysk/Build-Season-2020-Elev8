@@ -5,61 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.Commands;
+package frc.robot.DriveCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.Subsystems.ControlPanelSubsystem;
+import frc.robot.RobotContainer;
+import frc.robot.Subsystems.DriveSubsystem;
 
-public class RotationCommand extends CommandBase {
-  /**
-   * Creates a new RotationCommand.
-   */
-
-  private final ControlPanelSubsystem controlPanelSubsystem;
+public class BrakeCommand extends CommandBase {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   
-  public RotationCommand(Subsystem controlPanelSubsystem) {
+  private final DriveSubsystem driveSubsystem;
+  
+  /**
+   * Creates a new BrakeCommand.
+   */
+  public BrakeCommand(Subsystem driveSubsystem) {
+    
     // Use addRequirements() here to declare subsystem dependencies.
-    this.controlPanelSubsystem = (ControlPanelSubsystem) controlPanelSubsystem;
-    addRequirements(controlPanelSubsystem);
+    this.driveSubsystem = (DriveSubsystem) driveSubsystem;
+    addRequirements(driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    controlPanelSubsystem.setSpeed(Constants.wheelMaxSpeed);
+    driveSubsystem.drive(0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    String color = Robot.color;
-    if (!Robot.p_color.equals(color) && !color.equals("ERROR")){
-      Robot.p_color = color;
-      Robot.colors.add(Robot.p_color);
-    }
-  }
-  
-  public int degreesTurned(){
-    return (45 * (Robot.colors.size()-1));
-  }
 
-  public double turnsMade(){
-    return (Robot.colors.size()-1.0)/8.0;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.colors.removeAll(Robot.colors);
-    controlPanelSubsystem.setSpeed(0.0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return turnsMade() == 3;
+    return !RobotContainer.joy1.getRawButton(Constants.brakeButtonNumber);
   }
 }

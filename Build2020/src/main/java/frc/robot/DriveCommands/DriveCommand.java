@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.Commands;
+package frc.robot.DriveCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -14,17 +14,18 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Subsystems.DriveSubsystem;
 
-public class SteerCommand extends CommandBase {
+public class DriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-
+  
   private final DriveSubsystem driveSubsystem;
   
   /**
-   * Creates a new SteerCommand.
+   * Creates a new DriveCommand.
    */
-  public SteerCommand(Subsystem driveSubsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public DriveCommand(Subsystem driveSubsystem) {
+    
     this.driveSubsystem = (DriveSubsystem) driveSubsystem;
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveSubsystem);
   }
 
@@ -36,15 +37,21 @@ public class SteerCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double yaxis = RobotContainer.getY(RobotContainer.joy1, Constants.yDeadband); //Adjusted Y
+    
+    double yaxis = RobotContainer.getY(RobotContainer.joy1, Constants.yDeadband); // Adjusted Y
     double zaxis = RobotContainer.getZ(RobotContainer.joy1, Constants.zDeadband); // Adjusted Z
 
     SmartDashboard.putNumber("Y-AXIS", yaxis);
     SmartDashboard.putNumber("Z-AXIS", zaxis);
-
-    driveSubsystem.Drive_Steer(yaxis, zaxis);
-
+    
+  
+    if (Math.abs(zaxis) > Constants.zTurnThreshold) {
+      driveSubsystem.Drive_Turn(zaxis);
+    } else {
+      if (yaxis != 0) driveSubsystem.Drive_Straight(yaxis);
+      else driveSubsystem.drive(0, 0);
+    }
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -55,6 +62,6 @@ public class SteerCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !RobotContainer.joy1.getRawButton(Constants.steerButtonNumber);
+    return false;
   }
 }

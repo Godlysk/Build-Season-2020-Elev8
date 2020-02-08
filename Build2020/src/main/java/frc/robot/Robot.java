@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorSensorV3.RawColor;
@@ -31,7 +31,11 @@ public class Robot extends TimedRobot {
   Command autonomousCommand;
   RobotContainer robotContainer;
   
-  public static ArrayList<String> colors = new ArrayList<>();
+  // public static ArrayList<String> colors = new ArrayList<>();
+
+  public static int count = 0;
+
+  public static boolean controlPanelShutdown = false;
 
   public static String p_color = "";
 
