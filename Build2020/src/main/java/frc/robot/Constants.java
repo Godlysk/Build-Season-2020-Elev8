@@ -25,10 +25,19 @@ public final class Constants {
 
     public final static int CP_port = 8;
     public final static int SF_port = 1;
-    public final static int SR_port = 2;
+    public final static int SR_port = 0;
 
-    public final static double wheelMaxSpeed = 0.3;
-    public final static double maxSpeed = 0.4;
+    public final static double kP = 0.0d;
+    public final static double kI = 0.0d;
+    public final static double kD = 0.0d;
+
+    //SimpleFeedForward Constants - 
+    public final static double kS = 0.755;
+    public final static double kV = 0.00398;
+    public final static double kA = 7.17 * Math.pow(10.0, -5);
+
+    public final static double wheelMaxSpeed = 0.5;
+    public final static double maxSpeed = 0.55;
     public final static double swerveCoefficient = 0.4;
     public final static double yDeadband = 0.05;
     public final static double zDeadband = 0.2;
@@ -44,7 +53,6 @@ public final class Constants {
     public static double kP_DriveTurn = 0;
     public static double kI_DriveTurn = 0;
     public static double kD_DriveTurn = 0;
-    
 
     public static double kP_NavX = 0;
     public static double kI_NavX = 0;
@@ -56,7 +64,7 @@ public final class Constants {
     public final static int brakeButtonNumber = 7;
     public final static int rotationButtonNumber = 3;
     public final static int positionButtonNumber = 4;
-    public final static int solenoidButtonNumber = 11;
+    public final static int solenoidButtonNumber = 5;
 
     //Sigmoid function
     public static final double sigmoid(double value) {

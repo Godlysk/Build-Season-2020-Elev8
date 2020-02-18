@@ -43,6 +43,7 @@ public class RobotContainer {
   private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
   
   private final DriveCommand driveCommand = new DriveCommand(driveSubsystem);
+  private final SteerCommand steerCommand = new SteerCommand(driveSubsystem);
   private final UpCommand upCommand = new UpCommand(solenoidSubsystem);
 
   /**
@@ -51,7 +52,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    driveSubsystem.setDefaultCommand(driveCommand);
+    driveSubsystem.setDefaultCommand(steerCommand);
     solenoidSubsystem.setDefaultCommand(upCommand);
   }
 
@@ -64,13 +65,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
    
     JoystickButton commandBrakeButton = new JoystickButton(joy1, Constants.brakeButtonNumber);
-    JoystickButton commandSteerButton = new JoystickButton(joy1, Constants.steerButtonNumber);
+    // JoystickButton commandSteerButton = new JoystickButton(joy1, Constants.steerButtonNumber);
     JoystickButton rotationControlButton = new JoystickButton(joy1, Constants.rotationButtonNumber);
     JoystickButton positionControlButton = new JoystickButton(joy1, Constants.positionButtonNumber);
     JoystickButton solenoidButton = new JoystickButton(joy1, Constants.solenoidButtonNumber);
     
     commandBrakeButton.whenPressed(new BrakeCommand(driveSubsystem));
-    commandSteerButton.whenPressed(new SteerCommand(driveSubsystem));
+    // commandSteerButton.whenPressed(new SteerCommand(driveSubsystem));
 
     // rotationControlButton.whenPressed(new RotationCommand(controlPanelSubsystem));  
     // positionControlButton.whenPressed(new PositionCommand(controlPanelSubsystem));
@@ -78,7 +79,7 @@ public class RobotContainer {
     rotationControlButton.toggleWhenPressed(new RotationCommand(controlPanelSubsystem));
     positionControlButton.toggleWhenPressed(new PositionCommand(controlPanelSubsystem));
 
-    solenoidButton.whileHeld(new DownCommand(solenoidSubsystem));    
+    solenoidButton.toggleWhenPressed(new DownCommand(solenoidSubsystem));    
 
   }
 

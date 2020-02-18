@@ -9,6 +9,7 @@ package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class SolenoidSubsystem extends SubsystemBase {
 
@@ -18,7 +19,7 @@ public class SolenoidSubsystem extends SubsystemBase {
    * Creates a new SolenoidSubsystem.
    */
   public SolenoidSubsystem() {
-    doubleSolenoid =  new DoubleSolenoid(1, 2);  
+    doubleSolenoid =  new DoubleSolenoid(Constants.SR_port, Constants.SF_port);  
   }
 
   public void setMode(int mode){

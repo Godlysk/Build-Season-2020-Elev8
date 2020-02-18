@@ -98,15 +98,24 @@ public class DriveSubsystem extends SubsystemBase {
     double left = yaxis - correction - correction_NavX;
     double right = yaxis + correction + correction_NavX;
 
-    drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
+    drive(yaxis*Constants.maxSpeed, yaxis*Constants.maxSpeed);
 
   }
 
 
 
   public void Drive_Steer(double yaxis, double zaxis) {
+    
+    double shaftLeftRate = RobotContainer.enc_L.getRate();
+    double shaftRightRate = RobotContainer.enc_R.getRate();
+    
+    SmartDashboard.putNumber("Left Encoder Rate", shaftLeftRate);
+    SmartDashboard.putNumber("Right Encoder Rate", shaftRightRate);
 
     double error = zaxis*Constants.swerveCoefficient;
+
+    SmartDashboard.putNumber("Error between encoders", Math.abs(shaftLeftRate+shaftRightRate));
+
     double left = yaxis + error;
     double right = yaxis - error;
     drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
@@ -135,7 +144,7 @@ public class DriveSubsystem extends SubsystemBase {
     double left = (zaxis + correction);
     double right = -1 * (zaxis - correction);
 
-    drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
+    drive(zaxis*Constants.maxSpeed, -zaxis*Constants.maxSpeed);
     
   }
 

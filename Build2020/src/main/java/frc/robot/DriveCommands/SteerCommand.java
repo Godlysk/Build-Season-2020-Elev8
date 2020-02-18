@@ -55,6 +55,7 @@ public class SteerCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !RobotContainer.joy1.getRawButton(Constants.steerButtonNumber);
+    // return !RobotContainer.joy1.getRawButton(Constants.steerButtonNumber);
+    return false;
   }
 }
