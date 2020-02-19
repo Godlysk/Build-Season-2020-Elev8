@@ -37,7 +37,7 @@ public final class Constants {
     public final static double kA = 7.17 * Math.pow(10.0, -5);
 
     public final static double wheelMaxSpeed = 0.5;
-    public final static double maxSpeed = 0.55;
+    public final static double maxSpeed = 0.8;
     public final static double swerveCoefficient = 0.4;
     public final static double yDeadband = 0.05;
     public final static double zDeadband = 0.2;

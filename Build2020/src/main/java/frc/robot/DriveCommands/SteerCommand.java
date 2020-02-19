@@ -13,18 +13,19 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Subsystems.DriveSubsystem;
+import frc.robot.Subsystems.DifferentialDriveSubsystem;
 
 public class SteerCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-  private final DriveSubsystem driveSubsystem;
+  private final DifferentialDriveSubsystem driveSubsystem;
   
   /**
    * Creates a new SteerCommand.
    */
   public SteerCommand(Subsystem driveSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.driveSubsystem = (DriveSubsystem) driveSubsystem;
+    this.driveSubsystem = (DifferentialDriveSubsystem) driveSubsystem;
     addRequirements(driveSubsystem);
   }
 
@@ -43,7 +44,7 @@ public class SteerCommand extends CommandBase {
     SmartDashboard.putNumber("Y-AXIS", yaxis);
     SmartDashboard.putNumber("Z-AXIS", zaxis);
 
-    driveSubsystem.Drive_Steer(yaxis, zaxis);
+    driveSubsystem.drive(yaxis, zaxis);
 
   }
 
