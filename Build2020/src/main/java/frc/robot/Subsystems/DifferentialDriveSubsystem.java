@@ -62,6 +62,7 @@ public class DifferentialDriveSubsystem extends SubsystemBase {
   }
 
   public void drive(double yaxis, double zaxis){
+    rightMaster.setInverted(false);
     PID();
     drive.arcadeDrive(yaxis*Constants.maxSpeed, (zaxis+rcw)*Constants.maxSpeed); 
   }
