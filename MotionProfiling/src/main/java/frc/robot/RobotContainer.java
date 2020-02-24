@@ -14,12 +14,15 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.SolenoidCommands.DownCommand;
+import frc.robot.SolenoidCommands.UpCommand;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.BallTrackingCommand;
 import frc.robot.commands.CustomPIDDrive;
 import frc.robot.commands.PIDDriveCommand;
 import frc.robot.commands.StopMotorsCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.SolenoidSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -40,6 +43,11 @@ public class RobotContainer {
   private final ArcadeDriveCommand arcadeDriveCommand = new ArcadeDriveCommand(driveSubsystem);
   private final CustomPIDDrive customDriveCommand = new CustomPIDDrive(driveSubsystem);
   private final PIDDriveCommand pidTankDriveCommand = new PIDDriveCommand(driveSubsystem);
+
+  private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
+  private final UpCommand upCommand = new UpCommand(solenoidSubsystem);
+
+
   
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -48,7 +56,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(arcadeDriveCommand);
-
+    solenoidSubsystem.setDefaultCommand(upCommand);
   }
 
   /**
@@ -64,6 +72,9 @@ public class RobotContainer {
 
     JoystickButton ballTrackingButton = new JoystickButton(joy1, Constants.ballButtonNumber);
     ballTrackingButton.whenPressed(new BallTrackingCommand(driveSubsystem));
+
+    JoystickButton solenoidButton = new JoystickButton(joy1, Constants.solenoidButtonNumber);
+    solenoidButton.toggleWhenPressed(new DownCommand(solenoidSubsystem)); 
     
   }
 

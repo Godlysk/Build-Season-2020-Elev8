@@ -34,6 +34,7 @@ public final class Constants {
     // Buttons - Joystick 1
     public final static int brakeButtonNumber = 7;
     public final static int ballButtonNumber = 2;
+    public final static int solenoidButtonNumber = 5;
 
     // CAN IDs
     public final static int FR_port = 3;
