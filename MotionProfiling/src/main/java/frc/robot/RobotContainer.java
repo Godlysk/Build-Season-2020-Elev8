@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.ShooterCommands.IntakeCommand;
+import frc.robot.ShooterCommands.ShooterCommand;
 import frc.robot.SolenoidCommands.DownCommand;
 import frc.robot.SolenoidCommands.UpCommand;
 import frc.robot.commands.ArcadeDriveCommand;
@@ -22,6 +24,8 @@ import frc.robot.commands.CustomPIDDrive;
 import frc.robot.commands.PIDDriveCommand;
 import frc.robot.commands.StopMotorsCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
 
 /**
@@ -35,19 +39,22 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   public static Joystick joy1 = new Joystick(1);
+  public static Joystick joy2 = new Joystick(2);
   public static Encoder enc_L = new Encoder(2, 3, true, Encoder.EncodingType.k4X);
   public static Encoder enc_R = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
 
-  private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  private final ArcadeDriveCommand arcadeDriveCommand = new ArcadeDriveCommand(driveSubsystem);
-  private final CustomPIDDrive customDriveCommand = new CustomPIDDrive(driveSubsystem);
-  private final PIDDriveCommand pidTankDriveCommand = new PIDDriveCommand(driveSubsystem);
+  // private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  // private final ArcadeDriveCommand arcadeDriveCommand = new ArcadeDriveCommand(driveSubsystem);
+  // private final CustomPIDDrive customDriveCommand = new CustomPIDDrive(driveSubsystem);
+  // private final PIDDriveCommand pidTankDriveCommand = new PIDDriveCommand(driveSubsystem);
 
   private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
   private final UpCommand upCommand = new UpCommand(solenoidSubsystem);
-
-
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final ShooterCommand shooterCommand = new ShooterCommand(shooterSubsystem);
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
   
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -55,8 +62,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    driveSubsystem.setDefaultCommand(arcadeDriveCommand);
+    // driveSubsystem.setDefaultCommand(arcadeDriveCommand);
     solenoidSubsystem.setDefaultCommand(upCommand);
+    shooterSubsystem.setDefaultCommand(shooterCommand);
+    intakeSubsystem.setDefaultCommand(intakeCommand);
   }
 
   /**
@@ -67,11 +76,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    JoystickButton commandBrakeButton = new JoystickButton(joy1, Constants.brakeButtonNumber);
-    commandBrakeButton.whenPressed(new StopMotorsCommand(driveSubsystem));
+    // JoystickButton commandBrakeButton = new JoystickButton(joy1, Constants.brakeButtonNumber);
+    // // commandBrakeButton.whenPressed(new StopMotorsCommand(driveSubsystem));
 
-    JoystickButton ballTrackingButton = new JoystickButton(joy1, Constants.ballButtonNumber);
-    ballTrackingButton.whenPressed(new BallTrackingCommand(driveSubsystem));
+    // JoystickButton ballTrackingButton = new JoystickButton(joy1, Constants.ballButtonNumber);
+    // ballTrackingButton.whenPressed(new BallTrackingCommand(driveSubsystem));
 
     JoystickButton solenoidButton = new JoystickButton(joy1, Constants.solenoidButtonNumber);
     solenoidButton.toggleWhenPressed(new DownCommand(solenoidSubsystem)); 
