@@ -7,22 +7,36 @@
 
 package frc.robot;
 
+import java.util.List;
+
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.DriveCommands.DriveCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.ControlPanelCommands.PositionCommand;
 import frc.robot.ControlPanelCommands.RotationCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.DriveCommands.BrakeCommand;
 import frc.robot.DriveCommands.SteerCommand;
-import frc.robot.SolenoidCommands.UpCommand;
 import frc.robot.SolenoidCommands.DownCommand;
+import frc.robot.SolenoidCommands.UpCommand;
+import frc.robot.Subsystems.AutoDriveSubsystem;
 import frc.robot.Subsystems.ControlPanelSubsystem;
 import frc.robot.Subsystems.DifferentialDriveSubsystem;
-import frc.robot.Subsystems.DriveSubsystem;
 import frc.robot.Subsystems.SolenoidSubsystem;
 
 /**
@@ -39,15 +53,17 @@ public class RobotContainer {
   public static Encoder enc_L = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
   public static Encoder enc_R = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
+  public static AutoDriveSubsystem m_robotDrive = new AutoDriveSubsystem();
 
-  private final DifferentialDriveSubsystem driveSubsystem2 = new DifferentialDriveSubsystem(navx);
-  private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  private final ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
-  private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
+
+  public final DifferentialDriveSubsystem driveSubsystem2 = new DifferentialDriveSubsystem(navx);
+  public final ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  public final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
   
-  private final DriveCommand driveCommand = new DriveCommand(driveSubsystem);
-  private final SteerCommand steerCommand = new SteerCommand(driveSubsystem2);
-  private final UpCommand upCommand = new UpCommand(solenoidSubsystem);
+  public final SteerCommand steerCommand = new SteerCommand(driveSubsystem2);
+  public final UpCommand upCommand = new UpCommand(solenoidSubsystem);
+
+  
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -67,69 +83,113 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
    
-    JoystickButton commandBrakeButton = new JoystickButton(joy1, Constants.brakeButtonNumber);
-    // JoystickButton commandSteerButton = new JoystickButton(joy1, Constants.steerButtonNumber);
-    JoystickButton rotationControlButton = new JoystickButton(joy1, Constants.rotationButtonNumber);
-    JoystickButton positionControlButton = new JoystickButton(joy1, Constants.positionButtonNumber);
-    JoystickButton solenoidButton = new JoystickButton(joy1, Constants.solenoidButtonNumber);
-    
+    //final JoystickButton commandBrakeButton = new JoystickButton(joy1, Constants.brakeButtonNumber);
+    // JoystickButton commandSteerButton = new JoystickButton(joy1,
+    // Constants.steerButtonNumber);
+    final JoystickButton rotationControlButton = new JoystickButton(joy1, Constants.rotationButtonNumber);
+    final JoystickButton positionControlButton = new JoystickButton(joy1, Constants.positionButtonNumber);
+    final JoystickButton solenoidButton = new JoystickButton(joy1, Constants.solenoidButtonNumber);
+
     // commandBrakeButton.whenPressed(new BrakeCommand(driveSubsystem));
     // commandSteerButton.whenPressed(new SteerCommand(driveSubsystem));
 
-    // rotationControlButton.whenPressed(new RotationCommand(controlPanelSubsystem));  
-    // positionControlButton.whenPressed(new PositionCommand(controlPanelSubsystem));
+    // rotationControlButton.whenPressed(new
+    // RotationCommand(controlPanelSubsystem));
+    // positionControlButton.whenPressed(new
+    // PositionCommand(controlPanelSubsystem));
 
     rotationControlButton.toggleWhenPressed(new RotationCommand(controlPanelSubsystem));
     positionControlButton.toggleWhenPressed(new PositionCommand(controlPanelSubsystem));
 
-    solenoidButton.toggleWhenPressed(new DownCommand(solenoidSubsystem));    
+    solenoidButton.toggleWhenPressed(new DownCommand(solenoidSubsystem));
 
   }
-
 
   public static double getY(final Joystick joy, final double band) {
     // Inverted (Joystick moved forwards gives negtive reading)
     double val = -joy.getY();
-
+    
     if (Math.abs(val) < band)
-        val = 0;
+      val = 0;
     else {
-        val = val - Math.signum(val) * band;
+      val = val - Math.signum(val) * band;
     }
     return val;
   }
 
-  public static double getZ(Joystick joy, double band) {
+  public static double getZ(final Joystick joy, final double band) {
     double val = joy.getZ();
 
     if (Math.abs(val) < band)
-        val = 0;
+      val = 0;
     else {
-        val = val - Math.signum(val) * band;
+      val = val - Math.signum(val) * band;
     }
     return val;
   }
 
-  public static double getX(Joystick joy, double band) {
+  public static double getX(final Joystick joy, final double band) {
 
     double val = joy.getX();
 
     if (Math.abs(val) < band)
-        val = 0;
+      val = 0;
     else {
-        val = val - Math.signum(val) * band;
+      val = val - Math.signum(val) * band;
     }
     return val;
   }
-
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return null;
+
+    // Create a voltage constraint to ensure we don't accelerate too fast
+    var autoVoltageConstraint =
+        new DifferentialDriveVoltageConstraint(
+new SimpleMotorFeedforward(Constants.kS,Constants.kV,Constants.kA),Constants.kDriveKinematics,10);
+
+    // Create config for trajectory
+    TrajectoryConfig config =
+        new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
+                             Constants.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(Constants.kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint);
+
+    // An example trajectory to follow.  All units in meters.
+    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(
+            new Translation2d(1, 1),
+            new Translation2d(2, -1)
+        ),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(5, 0, new Rotation2d(0)),
+        // Pass config
+        config
+    );
+
+    RamseteCommand ramseteCommand = new RamseteCommand(
+        exampleTrajectory,
+        m_robotDrive::getPose,
+        new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
+        new SimpleMotorFeedforward(Constants.kS,Constants.kV,Constants.kA),
+        Constants.kDriveKinematics,
+        m_robotDrive::getWheelSpeeds,
+        new PIDController(Constants.kPDriveVel, 0, 0),
+        new PIDController(Constants.kPDriveVel, 0, 0),
+        // RamseteCommand passes volts to the callback
+        m_robotDrive::tankDriveVolts,
+        m_robotDrive
+    );
+
+    // Run path following command, then stop at the end.
+    return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
   }
 }

@@ -7,12 +7,10 @@
 
 package frc.robot.DriveCommands;
 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.Subsystems.DifferentialDriveSubsystem;
 import frc.robot.Subsystems.DriveSubsystem;
 
 public class BrakeCommand extends CommandBase {

@@ -16,6 +16,7 @@ import frc.robot.RobotContainer;
 
 public class DriveSubsystem extends SubsystemBase {
   
+  public static Object drive;
   private final WPI_TalonSRX FR;
   private final WPI_TalonSRX BR;
   private final WPI_TalonSRX FL;
@@ -98,10 +99,9 @@ public class DriveSubsystem extends SubsystemBase {
     double left = yaxis - correction - correction_NavX;
     double right = yaxis + correction + correction_NavX;
 
-    drive(yaxis*Constants.maxSpeed, yaxis*Constants.maxSpeed);
+    drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
 
   }
-
 
 
   public void Drive_Steer(double yaxis, double zaxis) {
@@ -121,7 +121,6 @@ public class DriveSubsystem extends SubsystemBase {
     drive(left*Constants.maxSpeed, right*Constants.maxSpeed);
 
   }
-
 
   double integral_PointTurn = 0;
 
@@ -144,11 +143,7 @@ public class DriveSubsystem extends SubsystemBase {
     double left = (zaxis + correction);
     double right = -1 * (zaxis - correction);
 
-    drive(zaxis*Constants.maxSpeed, -zaxis*Constants.maxSpeed);
+    drive(left*Constants.maxSpeed, -right*Constants.maxSpeed);
     
   }
-
-
-
-
 }

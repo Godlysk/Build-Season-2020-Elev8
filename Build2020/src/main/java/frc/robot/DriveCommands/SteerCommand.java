@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.Subsystems.DriveSubsystem;
 import frc.robot.Subsystems.DifferentialDriveSubsystem;
 
 public class SteerCommand extends CommandBase {

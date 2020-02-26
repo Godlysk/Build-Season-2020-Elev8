@@ -9,11 +9,11 @@ package frc.robot;
 
 // import java.util.ArrayList;
 
-import com.revrobotics.ColorSensorV3;
-import com.revrobotics.ColorSensorV3.RawColor;
+//import com.revrobotics.ColorSensorV3;
+//import com.revrobotics.ColorSensorV3.RawColor;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.I2C;
+//import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   
+  public static final String DriveSubsystem = null;
   Command autonomousCommand;
   RobotContainer robotContainer;
   
@@ -45,8 +46,8 @@ public class Robot extends TimedRobot {
 
   public static String color = "";
   
-  private final I2C.Port i2cPort = I2C.Port.kOnboard;
-  private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+  //private final I2C.Port i2cPort = I2C.Port.kOnboard;
+  //private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -80,41 +81,40 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
 
-    RawColor detectedColor = colorSensor.getRawColor();
-    double IR = colorSensor.getIR();
+    //final RawColor detectedColor = colorSensor.getRawColor();
+    //final double IR = colorSensor.getIR();
 
-    double red = detectedColor.red;
-    double green = detectedColor.green;
-    double blue = detectedColor.blue;
-    double redgreen = red/green;
-    double greenblue = green/blue;
-    double redblue = red/blue;
-    
-    String color = colorDetection(red, green, blue);
-  
+    //final double red = detectedColor.red;
+    //final double green = detectedColor.green;
+    //final double blue = detectedColor.blue;
+    //final double redgreen = red / green;
+    //final double greenblue = green / blue;
+    //final double redblue = red / blue;
+
+    //final String color = colorDetection(red, green, blue);
+
     SmartDashboard.putNumber("Red", red);
     SmartDashboard.putNumber("Green", green);
     SmartDashboard.putNumber("Blue", blue);
-    SmartDashboard.putNumber("Red by Green", redgreen);
-    SmartDashboard.putNumber("Green by Blue", greenblue);
-    SmartDashboard.putNumber("Red by Blue", redblue);
-    SmartDashboard.putNumber("IR", IR);
-    SmartDashboard.putString("Color", color);
+    //SmartDashboard.putNumber("Red by Green", redgreen);
+    //SmartDashboard.putNumber("Green by Blue", greenblue);
+    //SmartDashboard.putNumber("Red by Blue", redblue);
+    //SmartDashboard.putNumber("IR", IR);
+    //SmartDashboard.putString("Color", color);
 
     SmartDashboard.putString("Game Data", DriverStation.getInstance().getGameSpecificMessage());
-    
+
     Constants.kP_NavX = SmartDashboard.getNumber("P", 0);
     Constants.kI_NavX = SmartDashboard.getNumber("I", 0);
     Constants.kD_NavX = SmartDashboard.getNumber("D", 0);
 
-
   }
 
-  public String colorDetection(double red, double green, double blue) {
-    
-    double redgreen = red/green;
-    double redblue = red/blue;
-    double greenblue = green/blue;
+  public String colorDetection(final double red, final double green, final double blue) {
+
+    final double redgreen = red / green;
+    final double redblue = red / blue;
+    final double greenblue = green / blue;
 
     if(redgreen>=0.5 && redgreen<=0.65 && greenblue>=4.1 && greenblue<=5.6){
         return "Y";
@@ -152,18 +152,25 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     autonomousCommand = robotContainer.getAutonomousCommand();
 
+    /*
+     * String autoSelected = SmartDashboard.getString("Auto Selector",
+     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+     * = new MyAutoCommand(); break; case "Default Auto": default:
+     * autonomousCommand = new ExampleCommand(); break; }
+     */
+
     // schedule the autonomous command (example)
-    if (autonomousCommand != null) {
+    if (autonomousCommand != null) 
+    {
       autonomousCommand.schedule();
     }
-  }
+    }
 
-  /**
-   * This function is called periodically during autonomous.
-   */
   @Override
   public void autonomousPeriodic() {
+      //CommandScheduler.getInstance().run();
   }
+
 
   @Override
   public void teleopInit() {
