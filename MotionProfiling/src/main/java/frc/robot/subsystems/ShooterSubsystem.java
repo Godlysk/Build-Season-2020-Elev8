@@ -7,13 +7,15 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-  private WPI_TalonSRX shooter = new WPI_TalonSRX(3);
+  private WPI_TalonFX shooter = new WPI_TalonFX(2);
 
   /**
    * Creates a new ShooterSubsystem.
@@ -29,5 +31,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void setShooterSpeed(double speed){
     shooter.set(speed);
+    SmartDashboard.putNumber("FalconSpeed2", speed);
   }
 }

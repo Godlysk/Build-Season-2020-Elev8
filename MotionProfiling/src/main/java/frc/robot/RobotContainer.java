@@ -14,8 +14,12 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.ShooterCommands.IntakeCommand;
-import frc.robot.ShooterCommands.ShooterCommand;
+import frc.robot.ShooterCommands.IntakeFastCommand;
+import frc.robot.ShooterCommands.ShooterSlowCommand;
+import frc.robot.ShooterCommands.IntakeSlowCommand;
+import frc.robot.ShooterCommands.ShooterFastCommand;
+import frc.robot.ShooterCommands.SwitchShooterSign;
+import frc.robot.ShooterCommands.SwitchIntakeSign;
 import frc.robot.SolenoidCommands.DownCommand;
 import frc.robot.SolenoidCommands.UpCommand;
 import frc.robot.commands.ArcadeDriveCommand;
@@ -43,6 +47,8 @@ public class RobotContainer {
   public static Encoder enc_L = new Encoder(2, 3, true, Encoder.EncodingType.k4X);
   public static Encoder enc_R = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
+  public static double IntakeSign = 1.0; 
+  public static double ShooterSign = 1.0;
 
   // private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   // private final ArcadeDriveCommand arcadeDriveCommand = new ArcadeDriveCommand(driveSubsystem);
@@ -52,9 +58,7 @@ public class RobotContainer {
   private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
   private final UpCommand upCommand = new UpCommand(solenoidSubsystem);
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private final ShooterCommand shooterCommand = new ShooterCommand(shooterSubsystem);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
   
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -64,8 +68,7 @@ public class RobotContainer {
     configureButtonBindings();
     // driveSubsystem.setDefaultCommand(arcadeDriveCommand);
     solenoidSubsystem.setDefaultCommand(upCommand);
-    shooterSubsystem.setDefaultCommand(shooterCommand);
-    intakeSubsystem.setDefaultCommand(intakeCommand);
+    
   }
 
   /**
@@ -84,6 +87,26 @@ public class RobotContainer {
 
     JoystickButton solenoidButton = new JoystickButton(joy1, Constants.solenoidButtonNumber);
     solenoidButton.toggleWhenPressed(new DownCommand(solenoidSubsystem)); 
+    
+
+    JoystickButton intakeFastButton = new JoystickButton(joy1, 8);
+    intakeFastButton.whileHeld(new IntakeFastCommand(intakeSubsystem));
+
+    JoystickButton intakeSlowButton = new JoystickButton(joy1, 10);
+    intakeSlowButton.whileHeld(new IntakeSlowCommand(intakeSubsystem));
+
+    JoystickButton intakeSwitch = new JoystickButton(joy1, 12);
+    intakeSwitch.whenPressed(new SwitchIntakeSign());
+
+
+    JoystickButton shooterFastButton = new JoystickButton(joy1, 7);
+    shooterFastButton.whileHeld(new ShooterFastCommand(shooterSubsystem));
+
+    JoystickButton shooterSlowButton = new JoystickButton(joy1, 9);
+    shooterSlowButton.whileHeld(new ShooterSlowCommand(shooterSubsystem));
+
+    JoystickButton shooterSwitch = new JoystickButton(joy1, 11);
+    shooterSwitch.whenPressed(new SwitchShooterSign());
     
   }
 

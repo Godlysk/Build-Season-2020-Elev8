@@ -7,24 +7,27 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  private WPI_TalonSRX intake_master = new WPI_TalonSRX(2);
-  private WPI_TalonSRX intake_slave = new WPI_TalonSRX(1);
+  private WPI_TalonFX intake_master = new WPI_TalonFX(1);
+  // private WPI_TalonSRX intake_slave = new WPI_TalonSRX(1);
 
   /**
    * Creates a new IntakeSubsystem.
    */
   public IntakeSubsystem() {
-    intake_slave.follow(intake_master);
+    // intake_slave.follow(intake_master);
   }
 
   public void setIntakeSpeed(double speed){
-    intake_master.set(speed * 0.4);
+    intake_master.set(speed);
+    SmartDashboard.putNumber("FalconSpeed1", speed);
   }
 
   @Override
