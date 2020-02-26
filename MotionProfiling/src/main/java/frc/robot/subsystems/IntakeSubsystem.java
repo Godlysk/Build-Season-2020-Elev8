@@ -24,7 +24,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void setIntakeSpeed(double speed){
-    intake_master.set(speed);
+    intake_master.set(speed * 0.4);
   }
 
   @Override
