@@ -19,7 +19,7 @@ public final class Constants {
 
     public final static double yDeadband = 0.05;
     public final static double zDeadband = 0.05;
-    public final static double maxSpeed = 0.6;
+    public final static double maxSpeed = 0.8;
 
     public final static double steerCoefficient = 0.4;
     public final static double turnThresh = 0.2;
