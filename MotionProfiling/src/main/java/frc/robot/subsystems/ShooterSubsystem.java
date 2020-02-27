@@ -14,9 +14,9 @@ import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-  private final WPI_TalonSRX shooter = new WPI_TalonSRX(1);
-  private final WPI_TalonSRX intake_master = new WPI_TalonSRX(2);
-  private final WPI_TalonSRX intake_slave = new WPI_TalonSRX(3);
+  private final WPI_TalonSRX shooter = new WPI_TalonSRX(Constants.shooterPort);
+  private final WPI_TalonSRX intake_master = new WPI_TalonSRX(Constants.intakeMasterPort);
+  private final WPI_TalonSRX intake_slave = new WPI_TalonSRX(Constants.intakeSlavePort);
 
   /**
    * Creates a new ShooterSubsystem.
@@ -37,5 +37,5 @@ public class ShooterSubsystem extends SubsystemBase {
   public void setShooterSpeed(double speed){
     shooter.set(speed*Constants.maxShooterSpeed);
   }
-  
+
 }
