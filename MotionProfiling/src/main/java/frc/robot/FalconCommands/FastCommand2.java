@@ -5,37 +5,37 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.ShooterCommands;
+package frc.robot.FalconCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.FalconSubsystem;
 
-public class IntakeSlowCommand extends CommandBase {
-
-  private final IntakeSubsystem intakeSubsystem;
+public class FastCommand2 extends CommandBase {
   
+  private FalconSubsystem falconSubsystem;
   /**
-   * Creates a new IntakeSlowCommand.
+   * Creates a new FalconFastCommand.
    */
-  public IntakeSlowCommand(Subsystem intakeSubsystem) {
-    this.intakeSubsystem = new IntakeSubsystem();
+  public FastCommand2(Subsystem falconSubsystem) {
+    this.falconSubsystem = (FalconSubsystem)falconSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intakeSubsystem);
+    addRequirements(falconSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // double speed = RobotContainer.getY(RobotContainer.joy2, Constants.yDeadband);
-    intakeSubsystem.setIntakeSpeed(0.4*RobotContainer.IntakeSign);
+    // double speed = RobotContainer.getY(RobotContainer.joy1, Constants.yDeadband);
+    falconSubsystem.setSpeed2(0.7*RobotContainer.ShooterSign);
   }
 
   // Called once the command ends or is interrupted.
@@ -49,3 +49,4 @@ public class IntakeSlowCommand extends CommandBase {
     return false;
   }
 }
+

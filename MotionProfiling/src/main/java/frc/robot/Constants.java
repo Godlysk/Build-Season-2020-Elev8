@@ -65,5 +65,8 @@ public final class Constants {
     public final static double maxVelocity = 4.0;
 
 
+    public final static double maxIntakeSpeed = 0.4;
+    public final static double maxShooterSpeed = 0.9;
+
 
 }

@@ -5,28 +5,37 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.ShooterCommands;
+package frc.robot.FalconCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.FalconSubsystem;
 
-public class SwitchIntakeSign extends CommandBase {
+public class SlowCommand2 extends CommandBase {
+  
+  private FalconSubsystem falconSubsystem;
   /**
-   * Creates a new SwitchIntakeSign.
+   * Creates a new SlowCommand2.
    */
-  public SwitchIntakeSign() {
+  public SlowCommand2(Subsystem falconSubsystem) {
+    this.falconSubsystem = (FalconSubsystem)falconSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(falconSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.IntakeSign *= -1;
+    // double speed = RobotContainer.getY(RobotContainer.joy1, Constants.yDeadband);
+    falconSubsystem.setSpeed2(0.4*RobotContainer.directionf_2);
   }
 
   // Called once the command ends or is interrupted.

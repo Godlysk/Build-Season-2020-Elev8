@@ -8,30 +8,35 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class FalconSubsystem extends SubsystemBase {
 
-  private WPI_TalonFX intake_master = new WPI_TalonFX(1);
-  // private WPI_TalonSRX intake_slave = new WPI_TalonSRX(1);
+  private WPI_TalonFX motor1 = new WPI_TalonFX(1);
+  private WPI_TalonFX motor2= new WPI_TalonFX(2);
 
   /**
-   * Creates a new IntakeSubsystem.
+   * Creates a new FalconSubsystem.
    */
-  public IntakeSubsystem() {
-    // intake_slave.follow(intake_master);
-  }
-
-  public void setIntakeSpeed(double speed){
-    intake_master.set(speed);
-    SmartDashboard.putNumber("FalconSpeed1", speed);
+  public FalconSubsystem() {
+   
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public void setSpeed1(double speed){
+    motor1.set(speed);
+    SmartDashboard.putNumber("FalconSpeed1", speed);
+  }
+
+  public void setSpeed2(double speed){
+    motor2.set(speed);
+    SmartDashboard.putNumber("FalconSpeed2", speed);
+  }
+
 }

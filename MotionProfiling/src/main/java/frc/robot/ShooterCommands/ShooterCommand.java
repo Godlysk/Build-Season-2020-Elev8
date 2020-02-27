@@ -8,14 +8,22 @@
 package frc.robot.ShooterCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class SwitchShooterSign extends CommandBase {
+public class ShooterCommand extends CommandBase {
+
+  private final ShooterSubsystem shooterSubsystem;
+
   /**
-   * Creates a new SwitchShooterSign.
+   * Creates a new ShooterCommand.
    */
-  public SwitchShooterSign() {
+  public ShooterCommand(Subsystem shooterSubsystem) {
+    this.shooterSubsystem = (ShooterSubsystem)shooterSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +34,8 @@ public class SwitchShooterSign extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.ShooterSign *= -1;
+    double speed = RobotContainer.getY(RobotContainer.joy2, Constants.yDeadband);
+    shooterSubsystem.setIntakeSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
