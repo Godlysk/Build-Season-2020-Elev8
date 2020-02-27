@@ -9,7 +9,6 @@ package frc.robot.FalconCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.FalconSubsystem;
 
@@ -17,7 +16,7 @@ public class FastCommand2 extends CommandBase {
   
   private FalconSubsystem falconSubsystem;
   /**
-   * Creates a new FalconFastCommand.
+   * Creates a new FastCommand2.
    */
   public FastCommand2(Subsystem falconSubsystem) {
     this.falconSubsystem = (FalconSubsystem)falconSubsystem;
@@ -35,7 +34,7 @@ public class FastCommand2 extends CommandBase {
   @Override
   public void execute() {
     // double speed = RobotContainer.getY(RobotContainer.joy1, Constants.yDeadband);
-    falconSubsystem.setSpeed2(0.7*RobotContainer.ShooterSign);
+    falconSubsystem.setSpeed2(0.7*RobotContainer.directionf_2);
   }
 
   // Called once the command ends or is interrupted.

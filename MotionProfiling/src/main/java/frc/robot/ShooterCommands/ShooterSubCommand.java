@@ -9,7 +9,6 @@ package frc.robot.ShooterCommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -24,5 +23,5 @@ public class ShooterSubCommand extends ParallelCommandGroup {
     super(new IntakeCommand(shooterSubsystem), new ShooterCommand(shooterSubsystem));
     addRequirements(shooterSubsystem);
   }
-  
+
 }

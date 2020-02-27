@@ -20,15 +20,17 @@ import frc.robot.FalconCommands.SlowCommand1;
 import frc.robot.FalconCommands.SlowCommand2;
 import frc.robot.FalconCommands.SwitchSign1;
 import frc.robot.FalconCommands.SwitchSign2;
+import frc.robot.ShooterCommands.ShooterSubCommand;
 import frc.robot.SolenoidCommands.DownCommand;
 import frc.robot.SolenoidCommands.UpCommand;
-import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.commands.BallTrackingCommand;
-import frc.robot.commands.CustomPIDDrive;
-import frc.robot.commands.PIDDriveCommand;
-import frc.robot.commands.StopMotorsCommand;
-import frc.robot.subsystems.DriveSubsystem;
+// import frc.robot.commands.ArcadeDriveCommand;
+// import frc.robot.commands.BallTrackingCommand;
+// import frc.robot.commands.CustomPIDDrive;
+// import frc.robot.commands.PIDDriveCommand;
+// import frc.robot.commands.StopMotorsCommand;
+// import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FalconSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
 
 /**
@@ -57,6 +59,8 @@ public class RobotContainer {
   private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
   private final UpCommand upCommand = new UpCommand(solenoidSubsystem);
   private final FalconSubsystem falconSubsystem = new FalconSubsystem();
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final ShooterSubCommand shooterSubCommand = new ShooterSubCommand(shooterSubsystem);
   
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -66,7 +70,7 @@ public class RobotContainer {
     configureButtonBindings();
     // driveSubsystem.setDefaultCommand(arcadeDriveCommand);
     solenoidSubsystem.setDefaultCommand(upCommand);
-    
+    shooterSubsystem.setDefaultCommand(shooterSubCommand);
   }
 
   /**

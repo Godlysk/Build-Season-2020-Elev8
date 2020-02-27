@@ -9,7 +9,6 @@ package frc.robot.FalconCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.FalconSubsystem;
 
@@ -34,8 +33,7 @@ public class FastCommand1 extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // double speed = RobotContainer.getY(RobotContainer.joy2, Constants.yDeadband);
-    falconSubsystem.setSpeed1(0.7*RobotContainer.IntakeSign);
+    falconSubsystem.setSpeed1(0.7*RobotContainer.directionf_1);
   }
 
   // Called once the command ends or is interrupted.
