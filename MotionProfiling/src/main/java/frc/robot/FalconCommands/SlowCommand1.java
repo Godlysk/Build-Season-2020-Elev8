@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.FalconSubsystem;
+import frc.robot.Constants;
 
 public class SlowCommand1 extends CommandBase {
 
@@ -33,8 +34,9 @@ public class SlowCommand1 extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // double speed = RobotContainer.getY(RobotContainer.joy2, Constants.yDeadband);
-    falconSubsystem.setSpeed1(0.4*RobotContainer.directionf_1);
+    double speed = RobotContainer.getY(RobotContainer.joy1, Constants.yDeadband);
+    falconSubsystem.setSpeed1(speed*0.4);
+    // falconSubsystem.setSpeed1(0.4*RobotContainer.directionf_1);
   }
 
   // Called once the command ends or is interrupted.

@@ -72,7 +72,7 @@ public final class Constants {
     public final static int intakeSlavePort = 2;
     public final static int shooterPort = 3; 
 
-    public final static int falcon1Port = 4; 
+    public final static int falcon1Port = 6; 
     public final static int falcon2Port = 5; 
 
 
