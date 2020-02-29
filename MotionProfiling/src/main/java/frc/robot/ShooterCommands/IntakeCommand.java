@@ -11,19 +11,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeCommand extends CommandBase {
 
-  private final ShooterSubsystem shooterSubsystem;
+  private final IntakeSubsystem intakeSubsystem;
 
   /**
    * Creates a new IntakeCommand.
    */
-  public IntakeCommand(Subsystem shooterSubsystem) {
-    this.shooterSubsystem = (ShooterSubsystem)shooterSubsystem;
+  public IntakeCommand(Subsystem intakeSubsystem) {
+    this.intakeSubsystem = (IntakeSubsystem)intakeSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooterSubsystem);
+    addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -35,7 +35,7 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void execute() {
     double speed = RobotContainer.getY(RobotContainer.joy1, Constants.yDeadband);
-    shooterSubsystem.setIntakeSpeed(speed);
+    intakeSubsystem.setIntakeSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.

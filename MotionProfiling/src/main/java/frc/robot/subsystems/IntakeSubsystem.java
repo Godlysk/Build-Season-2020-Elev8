@@ -12,16 +12,16 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ShooterSubsystem extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
 
-  private final WPI_TalonSRX shooter = new WPI_TalonSRX(Constants.shooterPort);
-
+  private final WPI_TalonSRX intake_master = new WPI_TalonSRX(Constants.intakeMasterPort);
+  private final WPI_TalonSRX intake_slave = new WPI_TalonSRX(Constants.intakeSlavePort);
 
   /**
-   * Creates a new ShooterSubsystem.
+   * Creates a new IntakeSubsystem.
    */
-  public ShooterSubsystem() {
-
+  public IntakeSubsystem() {
+    intake_slave.follow(intake_master);
   }
 
   @Override
@@ -29,8 +29,8 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setShooterSpeed(double speed){
-    shooter.set(speed*Constants.maxShooterSpeed);
+  public void setIntakeSpeed(double speed){
+    intake_master.set(speed*Constants.maxIntakeSpeed);
   }
 
 }

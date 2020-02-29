@@ -65,8 +65,8 @@ public final class Constants {
     public final static double maxVelocity = 4.0;
 
 
-    public final static double maxIntakeSpeed = 0.4;
-    public final static double maxShooterSpeed = 0.9;
+    public final static double maxIntakeSpeed = 0.7;
+    public final static double maxShooterSpeed = 1.0;
 
     public final static int intakeMasterPort = 1;
     public final static int intakeSlavePort = 2;
@@ -74,6 +74,8 @@ public final class Constants {
 
     public final static int falcon1Port = 6; 
     public final static int falcon2Port = 5; 
+
+    public final static int shooterButton = 5;
 
 
 }

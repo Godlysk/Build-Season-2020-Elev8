@@ -11,15 +11,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.FalconSubsystem;
+import frc.robot.Constants;
 
-public class FastCommand2 extends CommandBase {
+public class ElevatorCommand extends CommandBase {
+
+  private final FalconSubsystem falconSubsystem;
   
-  private FalconSubsystem falconSubsystem;
   /**
-   * Creates a new FastCommand2.
+   * Creates a new ElevatorCommand.
    */
-  public FastCommand2(Subsystem falconSubsystem) {
-    this.falconSubsystem = (FalconSubsystem)falconSubsystem;
+  public ElevatorCommand(Subsystem falconSubsystem) {
+    this.falconSubsystem = (FalconSubsystem) falconSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(falconSubsystem);
   }
@@ -27,14 +29,14 @@ public class FastCommand2 extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // double speed = RobotContainer.getY(RobotContainer.joy1, Constants.yDeadband);
-    falconSubsystem.setSpeed2(0.7*RobotContainer.directionf_2);
+    double speed = RobotContainer.getY(RobotContainer.joy2, Constants.yDeadband);
+    falconSubsystem.setSpeed1(speed*0.7);
+    // falconSubsystem.setSpeed1(0.4*RobotContainer.directionf_1);
   }
 
   // Called once the command ends or is interrupted.
@@ -48,4 +50,3 @@ public class FastCommand2 extends CommandBase {
     return false;
   }
 }
-

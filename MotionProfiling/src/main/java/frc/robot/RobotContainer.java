@@ -14,14 +14,10 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.FalconCommands.FastCommand1;
-import frc.robot.FalconCommands.FastCommand2;
-import frc.robot.FalconCommands.SlowCommand1;
-import frc.robot.FalconCommands.SlowCommand2;
-import frc.robot.FalconCommands.SwitchSign1;
-import frc.robot.FalconCommands.SwitchSign2;
-// import frc.robot.ShooterCommands.ShooterSubCommand;
-import frc.robot.SolenoidCommands.DownCommand;
+import frc.robot.FalconCommands.ElevatorCommand;
+import frc.robot.ShooterCommands.IntakeCommand;
+import frc.robot.ShooterCommands.ShooterCommand;
+// import frc.robot.SolenoidCommands.DownCommand;
 import frc.robot.SolenoidCommands.UpCommand;
 // import frc.robot.commands.ArcadeDriveCommand;
 // import frc.robot.commands.BallTrackingCommand;
@@ -30,6 +26,7 @@ import frc.robot.SolenoidCommands.UpCommand;
 // import frc.robot.commands.StopMotorsCommand;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FalconSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
 
@@ -59,9 +56,12 @@ public class RobotContainer {
   private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
   private final UpCommand upCommand = new UpCommand(solenoidSubsystem);
   private final FalconSubsystem falconSubsystem = new FalconSubsystem();
-  private final SlowCommand1 slowCommand1 = new SlowCommand1(falconSubsystem);
-  // private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  // private final ShooterSubCommand shooterSubCommand = new ShooterSubCommand(shooterSubsystem);
+  private final ElevatorCommand elevatorCommand = new ElevatorCommand(falconSubsystem);
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final ShooterCommand shooterCommand = new ShooterCommand(shooterSubsystem);
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
+    // private final ShooterSubCommand shooterSubCommand = new ShooterSubCommand(shooterSubsystem);
   
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -71,8 +71,9 @@ public class RobotContainer {
     configureButtonBindings();
     // driveSubsystem.setDefaultCommand(arcadeDriveCommand);
     solenoidSubsystem.setDefaultCommand(upCommand);
-    // shooterSubsystem.setDefaultCommand(shooterSubCommand);
-    falconSubsystem.setDefaultCommand(slowCommand1);
+    // shooterSubsystem.setDefaultCommand(shooterCommand);
+    falconSubsystem.setDefaultCommand(elevatorCommand);
+    intakeSubsystem.setDefaultCommand(intakeCommand);
   }
 
   /**
@@ -89,29 +90,11 @@ public class RobotContainer {
     // JoystickButton ballTrackingButton = new JoystickButton(joy1, Constants.ballButtonNumber);
     // ballTrackingButton.whenPressed(new BallTrackingCommand(driveSubsystem));
 
-    JoystickButton solenoidButton = new JoystickButton(joy1, Constants.solenoidButtonNumber);
-    solenoidButton.toggleWhenPressed(new DownCommand(solenoidSubsystem)); 
+    // JoystickButton solenoidButton = new JoystickButton(joy1, Constants.solenoidButtonNumber);
+    // solenoidButton.toggleWhenPressed(new DownCommand(solenoidSubsystem)); 
 
-
-    // JoystickButton falcon1FastButton = new JoystickButton(joy1, 8);
-    // falcon1FastButton.whileHeld(new FastCommand1(falconSubsystem));
-
-    // JoystickButton falcon1SlowButton = new JoystickButton(joy1, 10);
-    // falcon1SlowButton.whileHeld(new SlowCommand1(falconSubsystem));
-
-    // JoystickButton falcon1Switch = new JoystickButton(joy1, 12);
-    // falcon1Switch.toggleWhenPressed(new SwitchSign1());
-
-
-    // JoystickButton falcon2FastButton = new JoystickButton(joy1, 7);
-    // falcon2FastButton.toggleWhenPressed(new FastCommand2(falconSubsystem));
-
-    // JoystickButton falcon2SlowButton = new JoystickButton(joy1, 9);
-    // falcon2SlowButton.toggleWhenPressed(new SlowCommand2(falconSubsystem));
-
-    // JoystickButton falcon2Switch = new JoystickButton(joy1, 11);
-    // falcon2Switch.whenPressed(new SwitchSign2());
-    
+    JoystickButton shooterButton = new JoystickButton(joy1, Constants.shooterButton);
+    shooterButton.toggleWhenPressed(shooterCommand);
   }
 
 

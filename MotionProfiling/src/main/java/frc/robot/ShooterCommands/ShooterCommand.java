@@ -10,7 +10,7 @@ package frc.robot.ShooterCommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
+// import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCommand extends CommandBase {
@@ -34,8 +34,8 @@ public class ShooterCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = RobotContainer.getY(RobotContainer.joy2, Constants.yDeadband);
-    shooterSubsystem.setIntakeSpeed(speed);
+    // double speed = RobotContainer.getY(RobotContainer.joy2, Constants.yDeadband);
+    shooterSubsystem.setShooterSpeed(Constants.maxShooterSpeed);
   }
 
   // Called once the command ends or is interrupted.
