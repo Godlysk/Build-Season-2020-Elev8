@@ -31,13 +31,8 @@ public class FalconSubsystem extends SubsystemBase {
   }
 
   public void setSpeed1(double speed){
-    motor1.set(speed);
-    SmartDashboard.putNumber("FalconSpeed1", speed);
-    motor2.set(-speed);
-    SmartDashboard.putNumber("FalconSpeed2", speed);
-  }
-
-  public void setSpeed2(double speed){
+    motor1.set(-speed);
+    SmartDashboard.putNumber("FalconSpeed1", -speed);
     motor2.set(speed);
     SmartDashboard.putNumber("FalconSpeed2", speed);
   }

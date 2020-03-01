@@ -7,6 +7,7 @@
 
 package frc.robot.FalconCommands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.RobotContainer;
@@ -35,7 +36,10 @@ public class ElevatorCommand extends CommandBase {
   @Override
   public void execute() {
     double speed = RobotContainer.getY(RobotContainer.joy2, Constants.yDeadband);
-    falconSubsystem.setSpeed1(speed*0.7);
+    falconSubsystem.setSpeed1(speed*0.9);
+    SmartDashboard.putNumber("FalconSpeed1", -speed);
+    SmartDashboard.putNumber("FlaconSpeed2", speed);
+
     // falconSubsystem.setSpeed1(0.4*RobotContainer.directionf_1);
   }
 

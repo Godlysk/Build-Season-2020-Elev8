@@ -55,12 +55,12 @@ public class RobotContainer {
 
   private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
   private final UpCommand upCommand = new UpCommand(solenoidSubsystem);
-  private final FalconSubsystem falconSubsystem = new FalconSubsystem();
-  private final ElevatorCommand elevatorCommand = new ElevatorCommand(falconSubsystem);
+  // private final FalconSubsystem falconSubsystem = new FalconSubsystem();
+  // private final ElevatorCommand elevatorCommand = new ElevatorCommand(falconSubsystem);
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final ShooterCommand shooterCommand = new ShooterCommand(shooterSubsystem);
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
+  // private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  // private final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
     // private final ShooterSubCommand shooterSubCommand = new ShooterSubCommand(shooterSubsystem);
   
   /**
@@ -71,9 +71,9 @@ public class RobotContainer {
     configureButtonBindings();
     // driveSubsystem.setDefaultCommand(arcadeDriveCommand);
     solenoidSubsystem.setDefaultCommand(upCommand);
-    // shooterSubsystem.setDefaultCommand(shooterCommand);
-    falconSubsystem.setDefaultCommand(elevatorCommand);
-    intakeSubsystem.setDefaultCommand(intakeCommand);
+    shooterSubsystem.setDefaultCommand(shooterCommand);
+    // falconSubsystem.setDefaultCommand(elevatorCommand);
+    // intakeSubsystem.setDefaultCommand(intakeCommand);
   }
 
   /**
@@ -93,8 +93,8 @@ public class RobotContainer {
     // JoystickButton solenoidButton = new JoystickButton(joy1, Constants.solenoidButtonNumber);
     // solenoidButton.toggleWhenPressed(new DownCommand(solenoidSubsystem)); 
 
-    JoystickButton shooterButton = new JoystickButton(joy1, Constants.shooterButton);
-    shooterButton.toggleWhenPressed(shooterCommand);
+    // JoystickButton shooterButton = new JoystickButton(joy1, Constants.shooterButton);
+    // shooterButton.toggleWhenPressed(shooterCommand);
   }
 
 
